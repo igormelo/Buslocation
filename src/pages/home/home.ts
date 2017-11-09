@@ -12,19 +12,21 @@ export class HomePage {
   res: any = {};
   lat: number;
   lng: number;
+  public position;
+  public marker;
   public options = {};
   constructor(public navCtrl: NavController, public af: AngularFireDatabase) {
 
   }
   ionViewDidLoad() {
-    this.initMap();
-    this.myLocation();
+    this.setLocation();
+    this.getLocation();
   }
-  initMap() {
+  setLocation() {
     let locationOptions = { timeout: 20000, enableHighAccuracy: true };
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.af.object('myLatLng').update({
+      navigator.geolocation.watchPosition(position => {
+        this.af.object('myLatLng').set({
           lat: position.coords.latitude,
           lng: position.coords.longitude
         })
@@ -36,18 +38,25 @@ export class HomePage {
 
 
   }
-  myLocation() {
-    this.af.object('myLatLng').subscribe(res => {
+  //MOSTRA NO MAPA
+  getLocation() {
+    const watch = this.af.object('myLatLng');
+    watch.subscribe(res => {
       this.res = res;
       this.lat = this.res.lat;
       this.lng = this.res.lng;
+      this.position = new google.maps.LatLng(this.lat, this.lng);
       this.options = {
-        center: new google.maps.LatLng(this.lat, this.lng),
-        zoom: 25,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        center: this.position,
+        zoom: 20,
+        mapTypeId: google.maps.MapTypeId.TERRAIN
       }
       this.map = new google.maps.Map(document.getElementById("map_canvas"), this.options);
+      this.marker = new google.maps.Marker({
+        position: this.position,
+        icon: { url: 'https://github.com/igormelo/Angular4-firebase/blob/master/src/app/assets/bus-station.png?raw=true' },
+      });
+      this.marker.setMap(this.map);
     })
   }
-
 }

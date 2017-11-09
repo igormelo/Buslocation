@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleMaps } from '@ionic-native/google-maps';
+import { AngularFireAuth } from 'angularfire2/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -50,6 +51,7 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     GoogleMaps,
+    AngularFireAuth,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
