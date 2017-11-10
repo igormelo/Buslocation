@@ -4,8 +4,8 @@
     <description>Ache seu onibus.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
     <universal-links>
-    <host name="testez-fbf7b.firebaseapp.com" scheme="https"></host>
-    <path url="/_/auth/callback"/>
+        <host name="testez-fbf7b.firebaseapp.com" scheme="https" />
+        <path url="/_/auth/callback" />
     </universal-links>
     <content src="index.html" />
     <access origin="*" />
@@ -87,7 +87,6 @@
     <plugin name="ionic-plugin-keyboard" spec="^2.2.1" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.1" />
     <plugin name="cordova-plugin-device" spec="^1.1.4" />
-    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-geolocation" spec="^2.4.3" />
     <plugin name="cordova-plugin-googlemaps" spec="^2.0.11">
@@ -99,4 +98,5 @@
         <variable name="APP_ID" value="156566041754041" />
         <variable name="APP_NAME" value="Buslocation" />
     </plugin>
+    <plugin name="cordova-plugin-splashscreen" spec="^4.0.3" />
 </widget>

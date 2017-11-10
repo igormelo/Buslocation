@@ -1,3 +1,4 @@
+import { Facebook } from '@ionic-native/facebook';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
@@ -13,6 +14,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { LoginPage } from '../pages/login/login';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -29,6 +31,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    LoginPage,
     TabsPage
 
   ],
@@ -42,6 +45,7 @@ const firebaseConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
+    LoginPage,
     AboutPage,
     ContactPage,
     HomePage,
@@ -51,6 +55,7 @@ const firebaseConfig = {
     StatusBar,
     SplashScreen,
     GoogleMaps,
+    Facebook,
     AngularFireAuth,
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]

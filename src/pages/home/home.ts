@@ -1,6 +1,6 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 
 declare var google;
 @Component({
@@ -9,16 +9,18 @@ declare var google;
 })
 export class HomePage {
   map: any;
+  email: any;
   res: any = {};
   lat: number;
   lng: number;
   public position;
   public marker;
   public options = {};
-  constructor(public navCtrl: NavController, public af: AngularFireDatabase) {
+  constructor(public navCtrl: NavController, public af: AngularFireDatabase, public navParams: NavParams) {
 
   }
   ionViewDidLoad() {
+    this.email = this.navParams.get('name');
     this.setLocation();
     this.getLocation();
   }

@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item>
+      <ion-label floating>E-Mail</ion-label>
+      <ion-input type="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="password"></ion-input>
+    </ion-item>
+  </ion-list>
+  <button full ion-button (click)="login()">Login</button>
+  <button full ion-button (click)="facebookLogin()">Login with Facebook</button>
+</ion-content>
