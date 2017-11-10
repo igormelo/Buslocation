@@ -1,5 +1,4 @@
 import { HomePage } from './../home/home';
-import { TabsPage } from './../tabs/tabs';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
@@ -18,14 +17,10 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  loginData = {
-    email: '',
-    password: ''
-  }
-  em: any;
-  push: any;
+  email: any;
+  name: any;
+  img: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController) {
-    this.push = TabsPage;
   }
 
   ionViewDidLoad() {
@@ -34,7 +29,7 @@ export class LoginPage {
       this.navCtrl.push(TabsPage);
     })*/
   }
-  login() {
+  /*login() {
     this.afAuth.auth.signInWithEmailAndPassword(this.loginData.email, this.loginData.password)
       .then(auth => {
         // Do custom things with auth
@@ -47,15 +42,17 @@ export class LoginPage {
         });
         toast.present();
       });
-  }
+  }*/
 
   facebookLogin() {
     this.facebook.login(['email']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
       firebase.auth().signInWithCredential(facebookCredential)
         .then((sucess) => {
-          this.em = sucess.email;
-          this.navCtrl.push(HomePage, { name: this.em });
+          this.email = sucess.email;
+          this.name = sucess.displayName;
+          this.img = sucess.photoURL;
+          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img });
         })
     })
   }

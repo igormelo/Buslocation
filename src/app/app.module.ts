@@ -7,7 +7,6 @@ import { HttpModule } from '@angular/http';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 import { AngularFireModule } from 'angularfire2';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
@@ -31,8 +30,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
-    LoginPage,
-    TabsPage
+    LoginPage
 
   ],
   imports: [
@@ -48,8 +46,7 @@ const firebaseConfig = {
     LoginPage,
     AboutPage,
     ContactPage,
-    HomePage,
-    TabsPage
+    HomePage
   ],
   providers: [
     StatusBar,

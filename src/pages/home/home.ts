@@ -9,7 +9,8 @@ declare var google;
 })
 export class HomePage {
   map: any;
-  email: any;
+  name: any;
+  photoURL: any;
   res: any = {};
   lat: number;
   lng: number;
@@ -20,7 +21,8 @@ export class HomePage {
 
   }
   ionViewDidLoad() {
-    this.email = this.navParams.get('name');
+    this.name = this.navParams.get('name');
+    this.photoURL = this.navParams.get('photoURL');
     this.setLocation();
     this.getLocation();
   }
