@@ -1,3 +1,4 @@
+import { RegisterPage } from './../pages/register/register';
 import { Facebook } from '@ionic-native/facebook';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -14,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../pages/login/login';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -47,6 +49,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage
+
   ],
   providers: [
     StatusBar,

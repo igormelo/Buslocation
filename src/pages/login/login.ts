@@ -4,6 +4,7 @@ import { IonicPage, NavController, NavParams, Platform, ToastController } from '
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
+import { User } from '../../models/user';
 /**
  * Generated class for the LoginPage page.
  *
@@ -17,44 +18,41 @@ import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  user = {} as User;
   email: any;
   name: any;
   img: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController) {
   }
 
-  ionViewDidLoad() {
-    /*let provider = new firebase.auth.FacebookAuthProvider();
-    this.afAuth.auth.signInWithPopup(provider).then((res) => {
-      this.navCtrl.push(TabsPage);
-    })*/
+  async login(user: User) {
+    try {
+      const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
+      console.log(result);
+      if (result) {
+        this.name = result.email;
+        this.navCtrl.setRoot(HomePage, { name: this.name });
+      } else {
+        console.log("Senha errada");
+      }
+    } catch (e) {
+      console.error(e);
+    }
   }
-  /*login() {
-    this.afAuth.auth.signInWithEmailAndPassword(this.loginData.email, this.loginData.password)
-      .then(auth => {
-        // Do custom things with auth
-      })
-      .catch(err => {
-        // Handle error
-        let toast = this.toastCtrl.create({
-          message: err.message,
-          duration: 1000
-        });
-        toast.present();
-      });
-  }*/
-
   facebookLogin() {
     this.facebook.login(['email']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
       firebase.auth().signInWithCredential(facebookCredential)
         .then((sucess) => {
-          this.email = sucess.email;
+          this.user.email = sucess.email;
           this.name = sucess.displayName;
           this.img = sucess.photoURL;
           this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img });
-        })
-    })
+        });
+    });
+  }
+  cadastrar() {
+    this.navCtrl.push('RegisterPage');
   }
 
 

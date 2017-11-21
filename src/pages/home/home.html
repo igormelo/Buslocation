@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <img [src]="this.photoURL" style="border-radius: 50%;height: 50px; width: 50px" align="left">
+    <img *ngIf="this.photoURL" [src]="this.photoURL" style="border-radius: 50%;height: 50px; width: 50px" align="left">
     <ion-title>{{this.name}}</ion-title>
   </ion-navbar>
 </ion-header>

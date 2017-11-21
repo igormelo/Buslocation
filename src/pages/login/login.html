@@ -3,17 +3,19 @@
     <ion-title>Login</ion-title>
   </ion-navbar>
 </ion-header>
-<ion-content padding>
-  <ion-list>
-    <ion-item>
-      <ion-label floating>E-Mail</ion-label>
-      <ion-input type="email"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password"></ion-input>
-    </ion-item>
-  </ion-list>
-  <button full ion-button (click)="login()">Login</button>
-  <button full ion-button (click)="facebookLogin()">Login with Facebook</button>
+<ion-content>
+  <!--<video autoplay loop muted id="video">
+    <source src="http://thenewcode.com/assets/videos/zsystems-alt.mp4" type="video/mp4">
+  </video>-->
+  <ion-item>
+    <ion-label floating>Email</ion-label>
+    <ion-input type="text" [(ngModel)]="user.email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Senha</ion-label>
+    <ion-input type="password" [(ngModel)]="user.password"></ion-input>
+  </ion-item>
+  <button ion-button (click)="login(user)">Login</button>
+  <button ion-button color="light" (click)="cadastrar()">Cadastrar</button>
+  <button ion-button (click)="facebookLogin()"><ion-icon name="logo-facebook"></ion-icon></button>
 </ion-content>
