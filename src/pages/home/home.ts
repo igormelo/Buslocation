@@ -1,6 +1,6 @@
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 declare var google;
 @Component({
@@ -17,14 +17,19 @@ export class HomePage {
   public position;
   public marker;
   public options = {};
-  constructor(public navCtrl: NavController, public af: AngularFireDatabase, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public af: AngularFireDatabase, public navParams: NavParams, private toastCtrl: ToastController) {
 
   }
   ionViewDidLoad() {
+
     this.name = this.navParams.get('name');
     this.photoURL = this.navParams.get('photoURL');
     this.setLocation();
     this.getLocation();
+    this.toastCtrl.create({
+      message: `Bem vindo ao BusLocation, ${this.name}`,
+      duration: 2000
+    }).present();
   }
   setLocation() {
     let locationOptions = { timeout: 20000, enableHighAccuracy: true };

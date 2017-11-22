@@ -1,6 +1,6 @@
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
@@ -18,17 +18,20 @@ import { User } from '../../models/user';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  response: boolean;
   user = {} as User;
   email: any;
   name: any;
   img: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public afAuth: AngularFireAuth, public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, public afAuth: AngularFireAuth,
+    public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController,
+    public loadingCtrl: LoadingController) {
   }
-
   async login(user: User) {
+    this.response = true;
     try {
       const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
-      console.log(result);
       if (result) {
         this.name = result.email;
         this.navCtrl.setRoot(HomePage, { name: this.name });

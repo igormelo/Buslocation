@@ -1,3 +1,56 @@
-page-login {
+.item.item-input{
+    background-color: transparent;
+}
+#video {
+    position: fixed;
+    
+    top: 50%;
+    
+    left: 50%;
+    
+    min-width: 100%;
+    
+    min-height: 100%;
+    
+    width: auto;
+    
+    height: auto;
+    
+    z-index: -100;
+    
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    
+    transform: translateX(-50%) translateY(-50%);
+    
 
 }
+#login {
+    background: #1c2627 url("../img/login_bg.jpg") no-repeat center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+ion-row {
+    align-items: center;
+    text-align: center;
+  }
+  .logo {
+    padding-top: 80px;
+    padding-bottom: 20px;
+  }
+  .submit-btn {
+    background: rgba(36, 48, 181, 0.63);
+    border-radius: 35px !important;
+    font-size: 1.3em;
+    /*border: 1px solid #ffffff;*/
+  }
+  .register-btn {
+    color: #ffffff;
+    font-size: 1.2em;
+  }
+
+
