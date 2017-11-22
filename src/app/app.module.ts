@@ -16,6 +16,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../pages/login/login';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -57,7 +58,8 @@ const firebaseConfig = {
     GoogleMaps,
     Facebook,
     AngularFireAuth,
-    { provide: ErrorHandler, useClass: IonicErrorHandler }
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    AuthServiceProvider
   ]
 })
 export class AppModule { }

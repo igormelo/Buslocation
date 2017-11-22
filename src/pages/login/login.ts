@@ -1,11 +1,11 @@
+import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
 import { HomePage } from './../home/home';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
-import { User } from '../../models/user';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 /**
  * Generated class for the LoginPage page.
@@ -20,33 +20,43 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  public remember: boolean;
   loginForm: FormGroup;
-  response: boolean;
+  public response: boolean;
   user = {} as User;
   email: any;
   name: any;
   img: any;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
-    public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController,
-    public fb: FormBuilder) {
+    public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController, private authService: AuthServiceProvider,
+    public fb: FormBuilder, private alertCtrl: AlertController) {
     this.initForm(fb);
     this.user = new User();
-  }
-  async login(user: User) {
-    this.response = true;
-    try {
-      const result = await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
-      if (result) {
-        this.name = result.email;
-        this.navCtrl.setRoot(HomePage, { name: this.name });
-      } else {
-        console.log("Senha errada");
-      }
-    } catch (e) {
-      console.error(e);
+    const storedUsername = this.authService.rememberUser();
+    console.log(storedUsername);
+    if (storedUsername) {
+      this.remember = true;
+      this.loginForm.controls['email'].setValue(storedUsername);
     }
   }
+
+  //Botao de login do usuario
+  login(user: User) {
+    if (this.response) return;
+    this.response = true;
+    this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
+      .then(data => {
+        this.authService.setRememberUser(data.email);
+        this.email = data.email;
+        this.navCtrl.setRoot(HomePage, { name: this.email })
+      })
+      .catch(error => {
+        this.alert(error.message);
+      });
+
+  }
+  //Botao de login com Facebook
   facebookLogin() {
     this.facebook.login(['email']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
@@ -59,10 +69,7 @@ export class LoginPage {
         });
     });
   }
-  cadastrar() {
-    this.navCtrl.push('RegisterPage');
-  }
-
+  //Forms
   initForm(fb: FormBuilder) {
     this.loginForm = fb.group({
       email: [
@@ -78,7 +85,8 @@ export class LoginPage {
           Validators.required,
           Validators.pattern(/[0-9]{6}/g)
         ])
-      ]
+      ],
+      rememberUser: true
     })
   }
   submitForm(value: any) {
@@ -86,6 +94,20 @@ export class LoginPage {
     this.user = new User(value.email, value.password);
     this.login(value);
   }
-
+  //Lembrar usuario
+  rememberUser() {
+    if (this.response) return;
+  }
+  alert(message: string) {
+    this.alertCtrl.create({
+      title: 'Atenção!',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
+  }
+  //Botao de cadastrar usuario
+  cadastrar() {
+    this.navCtrl.push('RegisterPage');
+  }
 
 }

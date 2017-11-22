@@ -32,5 +32,9 @@
         <button ion-button (click)="facebookLogin()"><ion-icon name="logo-facebook"></ion-icon></button>
       </ion-col>
     </ion-row>
+    <ion-item class="check">
+      <ion-label>Me lembrar nesse dispositivo</ion-label>
+      <ion-checkbox [formControl]="loginForm.controls['rememberUser']"></ion-checkbox>
+    </ion-item>
   </form>
 </ion-content>
