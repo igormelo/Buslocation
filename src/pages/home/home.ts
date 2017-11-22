@@ -21,13 +21,12 @@ export class HomePage {
 
   }
   ionViewDidLoad() {
-
     this.name = this.navParams.get('name');
     this.photoURL = this.navParams.get('photoURL');
     this.setLocation();
     this.getLocation();
     this.toastCtrl.create({
-      message: `Bem vindo ao BusLocation, ${this.name}`,
+      message: `Bem vindo ao BusLocation:  ${this.name}`,
       duration: 2000
     }).present();
   }

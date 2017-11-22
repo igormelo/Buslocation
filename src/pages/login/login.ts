@@ -24,7 +24,7 @@ export class LoginPage {
   loginForm: FormGroup;
   public response: boolean;
   user = {} as User;
-  email: any;
+  email: string;
   name: any;
   img: any;
   constructor(public navCtrl: NavController,
@@ -48,7 +48,8 @@ export class LoginPage {
     this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
       .then(data => {
         this.authService.setRememberUser(data.email);
-        this.email = data.email;
+        const email = data.email;
+        this.email = email.split('@')[0].toUpperCase();
         this.navCtrl.setRoot(HomePage, { name: this.email })
       })
       .catch(error => {
