@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
@@ -16,18 +17,15 @@ import { User } from '../../models/user';
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  registerForm: FormGroup;
   user = {} as User
-  constructor(public navCtrl: NavController, public navParams: NavParams, private afAth: AngularFireAuth, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private afAth: AngularFireAuth, private alertCtrl: AlertController, public fb: FormBuilder) {
+    this.user = new User();
+    this.initForm(fb);
   }
-  alert(message: string) {
-    this.alertCtrl.create({
-      title: 'Info!',
-      subTitle: message,
-      buttons: ['OK']
-    }).present();
-  }
-  register(user: User) {
 
+  register(user: User) {
     this.afAth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(data => {
         this.alert('Registrado!');
@@ -36,5 +34,43 @@ export class RegisterPage {
         this.alert(error.message);
       });
   }
+
+  initForm(fb: FormBuilder) {
+    this.registerForm = fb.group({
+      email: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/)
+        ])
+      ],
+      password: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(/[0-9]{6}/g)
+        ])
+      ],
+      username: [
+        '',
+        Validators.compose([
+          Validators.required,
+        ])
+      ]
+    })
+  }
+  submitForm(value: any) {
+    if (!this.registerForm.valid) return;
+    this.user = new User(value.email, value.password, value.username);
+    this.register(value);
+  }
+  alert(message: string) {
+    this.alertCtrl.create({
+      title: 'Info!',
+      subTitle: message,
+      buttons: ['OK']
+    }).present();
+  }
+
 
 }

@@ -52,6 +52,7 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage, { name: this.email })
       })
       .catch(error => {
+        this.response = false;
         this.alert(error.message);
       });
 
@@ -91,7 +92,7 @@ export class LoginPage {
   }
   submitForm(value: any) {
     if (!this.loginForm.valid) return;
-    this.user = new User(value.email, value.password);
+    this.user = new User(value.email, value.password, null);
     this.login(value);
   }
   //Lembrar usuario
