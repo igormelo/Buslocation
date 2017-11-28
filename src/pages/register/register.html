@@ -5,28 +5,29 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
-    <ion-title>register</ion-title>
+    <ion-title>Preencha suas informações</ion-title>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content padding>
+<ion-content class="bg">
   <form [formGroup]="registerForm" (ngSubmit)="submitForm(registerForm.value)">
     <ion-item>
       <ion-label floating>Email</ion-label>
-      <ion-input type="text" [formControl]="registerForm.controls['email']"></ion-input>
+      <ion-input type="text" class="email" [formControl]="registerForm.controls['email']"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>Senha</ion-label>
-      <ion-input type="password" [formControl]="registerForm.controls['password']"></ion-input>
+      <ion-input type="password" class="pass" [formControl]="registerForm.controls['password']"></ion-input>
     </ion-item>
-    <ion-item>
-      <ion-label floating>Nome de exibição</ion-label>
-      <ion-input type="text" [formControl]="registerForm.controls['username']"></ion-input>
+    <ion-item class="driver">
+      <ion-label>Motorista</ion-label>
+      <ion-radio></ion-radio>
     </ion-item>
-    <button ion-button type="submit">Cadastrar</button>
+    <ion-item class="passing">
+      <ion-label>Passageiro</ion-label>
+      <ion-radio></ion-radio>
+    </ion-item>
+    <button ion-button round full type="submit">Cadastrar</button>
   </form>
 </ion-content>

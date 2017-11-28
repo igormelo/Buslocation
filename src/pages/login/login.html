@@ -1,6 +1,6 @@
-<ion-content center text-center>
+<ion-content class="bg-style">
   <video autoplay loop muted id="video">
-    <source src="http://thenewcode.com/assets/videos/floodplain-clean.mp4" type="video/mp4">
+    <source src="http://thenewcode.com/assets/videos/lake.mp4" type="video/mp4">
   </video>
   <ion-row class="logo">
     <ion-col></ion-col>
@@ -13,23 +13,23 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label floating>
+          <ion-label floating class='labelemail'>
             <ion-icon name="person"></ion-icon> Email</ion-label>
           <ion-input type="text" [formControl]="loginForm.controls['email']">
           </ion-input>
         </ion-item>
         <ion-item>
-          <ion-label floating>
+          <ion-label floating class='labelpass'>
             <ion-icon name="lock"></ion-icon> Senha</ion-label>
-          <ion-input type="password" [formControl]="loginForm.controls['password']"></ion-input>
+          <ion-input type="password" round [formControl]="loginForm.controls['password']"></ion-input>
         </ion-item>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col class="signup">
-        <button ion-button class="submit-btn" full type="submit"><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login'}}</button>
+        <button ion-button class="submit-btn" round full type="submit"><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login'}}</button>
         <button ion-button class="register-btn" block clear (click)="cadastrar()">Cadastrar</button>
-        <button ion-button (click)="facebookLogin()"><ion-icon name="logo-facebook"></ion-icon></button>
+        <button ion-button (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
       </ion-col>
     </ion-row>
     <ion-item class="check">

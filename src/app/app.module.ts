@@ -1,3 +1,4 @@
+import { MylocationComponent } from './../components/mylocation/mylocation';
 import { RegisterPage } from './../pages/register/register';
 import { Facebook } from '@ionic-native/facebook';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -17,6 +18,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../pages/login/login';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { MapComponent } from '../components/map/map';
+import { ComponentsModule } from '../components/components.module';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -33,7 +36,9 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
-    LoginPage
+    LoginPage,
+    MapComponent
+
 
   ],
   imports: [
@@ -49,7 +54,8 @@ const firebaseConfig = {
     LoginPage,
     AboutPage,
     ContactPage,
-    HomePage
+    HomePage,
+    MapComponent
 
   ],
   providers: [

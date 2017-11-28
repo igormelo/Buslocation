@@ -1,9 +1,19 @@
 <ion-header>
-  <ion-navbar>
+  <!--<ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <img *ngIf="this.photoURL" [src]="this.photoURL" style="border-radius: 50%;height: 50px; width: 50px" align="left">
-    <ion-title>{{this.name}}</ion-title>
-  </ion-navbar>
+  </ion-navbar>-->
 </ion-header>
-<ion-content>
-  <div id="map_canvas"></div>
+<ion-content class="home">
+  <ion-toolbar no-border-top color="primary">
+    <button ion-button icon-only menuToggle>
+          <ion-icon name="menu" (click)="menuItem()"></ion-icon>
+        </button>
+    <ion-title>{{name}}</ion-title>
+  </ion-toolbar>
+  <div class="map-wrapper">
+    <map #map></map>
+  </div>
 </ion-content>

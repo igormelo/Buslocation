@@ -1,3 +1,4 @@
+
 .item.item-input{
     background-color: transparent;
 }
@@ -43,8 +44,6 @@ ion-row {
     padding-bottom: 20px;
   }
   .submit-btn {
-    background: rgba(36, 48, 181, 0.63);
-    border-radius: 35px !important;
     font-size: 1.3em;
     /*border: 1px solid #ffffff;*/
   }
@@ -56,5 +55,13 @@ ion-row {
       background: transparent;
       border-color: transparent;
   }
+.labelemail{
+    font-size: 1em;
+    color: white;
+}
+.labelpass{
+    font-size: 1em;
+    color: white;
+}
 
 

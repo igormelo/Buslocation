@@ -1,12 +1,13 @@
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
 import { HomePage } from './../home/home';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { MapComponent } from '../../components/map/map';
 /**
  * Generated class for the LoginPage page.
  *
@@ -20,12 +21,14 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  initLat: number;
+  initLng: number;
   public remember: boolean;
   loginForm: FormGroup;
   public response: boolean;
   user = {} as User;
   email: string;
-  name: any;
+  name: any = "igor";
   img: any;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
@@ -34,10 +37,17 @@ export class LoginPage {
     this.initForm(fb);
     this.user = new User();
     const storedUsername = this.authService.rememberUser();
-    console.log(storedUsername);
     if (storedUsername) {
       this.remember = true;
       this.loginForm.controls['email'].setValue(storedUsername);
+    }
+  }
+  ionViewDidLoad() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.initLat = position.coords.latitude;
+        this.initLng = position.coords.longitude;
+      });
     }
   }
 
@@ -49,8 +59,8 @@ export class LoginPage {
       .then(data => {
         this.authService.setRememberUser(data.email);
         const email = data.email;
-        this.email = email.split('@')[0].toUpperCase();
-        this.navCtrl.setRoot(HomePage, { name: this.email })
+        this.email = email.split('@')[0].toUpperCase(0);
+        this.navCtrl.setRoot(HomePage, { name: this.email, initLat: this.initLat, initLng: this.initLng })
       })
       .catch(error => {
         this.response = false;
@@ -67,7 +77,7 @@ export class LoginPage {
           this.user.email = sucess.email;
           this.name = sucess.displayName;
           this.img = sucess.photoURL;
-          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img });
+          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img, initLat: this.initLat, initLng: this.initLng });
         });
     });
   }
@@ -93,7 +103,7 @@ export class LoginPage {
   }
   submitForm(value: any) {
     if (!this.loginForm.valid) return;
-    this.user = new User(value.email, value.password, null);
+    this.user = new User(value.email, value.password);
     this.login(value);
   }
   //Lembrar usuario
