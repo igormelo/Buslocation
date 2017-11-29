@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { MylocationComponent } from './../components/mylocation/mylocation';
 import { RegisterPage } from './../pages/register/register';
 import { Facebook } from '@ionic-native/facebook';
@@ -37,7 +38,8 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     LoginPage,
-    MapComponent
+    MapComponent,
+    MylocationComponent
 
 
   ],
@@ -55,7 +57,8 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
-    MapComponent
+    MapComponent,
+    MylocationComponent
 
   ],
   providers: [
@@ -65,7 +68,8 @@ const firebaseConfig = {
     Facebook,
     AngularFireAuth,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    AuthServiceProvider
+    AuthServiceProvider,
+    Geolocation
   ]
 })
 export class AppModule { }

@@ -26,19 +26,15 @@ export class HomePage {
 
   }
   ionViewDidLoad() {
-    this.name = this.navParams.get('name');
-    this.photoURL = this.navParams.get('photoURL');
     this.initLat = this.navParams.get('initLat');
     this.initLng = this.navParams.get('initLng');
-    console.log(this.initLat);
+    this.name = this.navParams.get('name');
+    this.photoURL = this.navParams.get('photoURL');
 
     this.toastCtrl.create({
       message: `Bem vindo:  ${this.name}`,
       duration: 3000
     }).present();
   }
-
-
-
 
 }

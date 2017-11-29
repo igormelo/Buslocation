@@ -23,11 +23,12 @@
     "@ionic-native/core": "4.3.2",
     "@ionic-native/facebook": "^4.3.3",
     "@ionic-native/firebase": "^4.3.3",
-    "@ionic-native/geolocation": "^4.3.3",
+    "@ionic-native/geolocation": "^4.4.2",
     "@ionic-native/google-maps": "^4.3.3",
     "@ionic-native/splash-screen": "^4.4.0",
     "@ionic-native/status-bar": "4.3.2",
     "@ionic/storage": "2.0.1",
+    "@types/googlemaps": "^3.30.0",
     "angularfire2": "^4.0.0-rc0",
     "cordova-android": "~6.3.0",
     "cordova-plugin-android-permissions": "^1.0.0",
@@ -60,7 +61,9 @@
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
       "cordova-plugin-ionic-webview": {},
-      "cordova-plugin-geolocation": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      },
       "cordova-plugin-googlemaps": {
         "API_KEY_FOR_ANDROID": "AIzaSyB-wUaUTgO5jQWJOMpG2kDq5W1t4tG1ZmQ"
       },

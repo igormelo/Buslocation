@@ -1,3 +1,4 @@
+import { MapComponent } from './../../components/map/map';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
 import { HomePage } from './../home/home';
@@ -7,7 +8,6 @@ import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { MapComponent } from '../../components/map/map';
 /**
  * Generated class for the LoginPage page.
  *
@@ -28,7 +28,7 @@ export class LoginPage {
   public response: boolean;
   user = {} as User;
   email: string;
-  name: any = "igor";
+  name: any;
   img: any;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,

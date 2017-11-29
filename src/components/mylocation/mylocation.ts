@@ -1,22 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnChanges, Input } from '@angular/core';
 
-/**
- * Generated class for the MylocationComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'mylocation',
   templateUrl: 'mylocation.html'
 })
-export class MylocationComponent {
-
-  text: string;
+export class MylocationComponent implements OnInit, OnChanges {
+  @Input() isPinSet: boolean;
+  @Input() map: google.maps.Map;
+  private popup: google.maps.InfoWindow;
+  private pickupMarker: google.maps.Marker;
 
   constructor() {
-    console.log('Hello MylocationComponent Component');
-    this.text = 'Hello World';
+  }
+  ngOnInit() {
+    console.log("iniciou");
+  }
+  ngOnChanges(changes) {
+    if (this.isPinSet) {
+      this.showPickupMarker();
+    } else {
+      this.removePickupMarker();
+    }
+  }
+  showPickupMarker() {
+    this.pickupMarker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.BOUNCE,
+      position: this.map.getCenter(),
+      icon: '../../assets/imgs/location-people.png'
+    })
+    setTimeout(() => {
+      this.pickupMarker.setAnimation(null);
+    }, 750);
+    this.showPickupTime();
+  }
+  removePickupMarker() {
+    if (this.pickupMarker) {
+      this.pickupMarker.setMap(null);
+    }
+
+  }
+  showPickupTime() {
+    this.popup = new google.maps.InfoWindow({
+      content: '<h5>Voce esta aqui!</h5>'
+    });
+    this.popup.open(this.map, this.pickupMarker);
+    google.maps.event.addListener(this.pickupMarker, 'click', () => {
+      this.popup.open(this.map, this.pickupMarker);
+    })
   }
 
 }

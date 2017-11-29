@@ -1,66 +1,82 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
+import { MylocationComponent } from '../mylocation/mylocation';
+import { Observable } from 'rxjs/Observable';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { } from '@types/googlemaps';
 
 
-declare var google;
+declare var google: any;
 @Component({
   selector: 'map',
   templateUrl: 'map.html'
 })
 export class MapComponent implements OnInit {
-  public map;
-  initLat: number;
-  initLng: number;
-  data: any;
-  lat: number;
-  lng: number;
-  location: any;
-  constructor(public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public loading: LoadingController) {
+  public map: google.maps.Map;
+  public mapIdle: boolean;
+  constructor(public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public geolocation: Geolocation) {
 
   }
   ngOnInit() {
-    this.createMap();
+    this.getCurrentLocation().subscribe(location => {
+      //this.map.panTo(location);
+    })
+    this.map = this.createMap();
+    this.addMapEventListener();
   }
-
-  setLocation() {
-    let locationOptions = { timeout: 20000, enableHighAccuracy: true };
-    if (navigator.geolocation) {
-      navigator.geolocation.watchPosition(position => {
-        this.af.object('oi').set({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude
-        });
-
-      }, (error) => {
-        console.log(error);
-      }, locationOptions
-      );
-    }
+  addMapEventListener() {
+    google.maps.event.addListener(this.map, 'dragstart', () => {
+      this.mapIdle = false;
+    })
+    google.maps.event.addListener(this.map, 'idle', () => {
+      this.mapIdle = true;
+    })
   }
 
   getCurrentLocation() {
-    let load = this.loading.create({
-      content: 'Aguarde...'
-    }).present();
-    const watch = this.af.object('oi')
-    watch.subscribe((data) => {
-      this.data = data;
-      this.lat = data.lat;
-      this.lng = data.lng;
-      this.location = new google.maps.LatLng(this.lat, this.lng);
-      let marker = new google.maps.Marker({ position: this.location, map: this.map });
+    let loading = this.loadingCtrl.create({
+      content: "Aguarde..."
     });
+    loading.present();
+    let locationOptions = { timeout: 20000, enableHighAccuracy: true };
+    let Obs = Observable.create(observable => {
+      this.geolocation.getCurrentPosition(locationOptions)
+        .then(resp => {
+          let lat = resp.coords.latitude;
+          let lng = resp.coords.longitude;
+
+          let location = new google.maps.LatLng(lat, lng);
+          observable.next(location);
+          loading.dismiss();
+        }, (err) => {
+          console.log("Geolocation error:" + err);
+          loading.dismiss();
+        })
+    })
+    return Obs;
   }
 
-
-  createMap(location = new google.maps.LatLng(-22.8996444, -43.1778848)) {
+  createMap(location = new google.maps.LatLng(-22.9068467, -43.1728965)) {
     let options = {
       center: location,
       zoom: 16,
       mapTypeId: google.maps.MapTypeId.TERRAIN
     }
-    this.map = new google.maps.Map(document.getElementById("map_canvas"), options);
+    let mapElement = document.getElementById("map_canvas");
+    let map = new google.maps.Map(mapElement, options);
+    return map;
+  }
+
+  centerLocation(location) {
+    if (location) {
+      this.map.panTo(location);
+    } else {
+      this.getCurrentLocation().subscribe(currentLocation => {
+        this.map.panTo(currentLocation);
+      });
+    }
   }
 
 }
