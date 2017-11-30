@@ -6,6 +6,7 @@ import { MylocationComponent } from '../mylocation/mylocation';
 import { Observable } from 'rxjs/Observable';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { } from '@types/googlemaps';
+import { BuslocationComponent } from '../buslocation/buslocation';
 
 
 declare var google: any;

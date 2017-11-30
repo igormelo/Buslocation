@@ -1,8 +1,10 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
+import { BusService } from '../../providers/bus/bus';
 
 @Component({
   selector: 'mylocation',
-  templateUrl: 'mylocation.html'
+  templateUrl: 'mylocation.html',
+  providers: [BusService]
 })
 export class MylocationComponent implements OnInit, OnChanges {
   @Input() isPinSet: boolean;

@@ -20,7 +20,9 @@ import { LoginPage } from '../pages/login/login';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { MapComponent } from '../components/map/map';
-import { ComponentsModule } from '../components/components.module';
+import { BusService } from '../providers/bus/bus';
+import { SimutaleProvider } from '../providers/simutale/simutale';
+import { BuslocationComponent } from '../components/buslocation/buslocation';
 
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
@@ -39,7 +41,8 @@ const firebaseConfig = {
     HomePage,
     LoginPage,
     MapComponent,
-    MylocationComponent
+    MylocationComponent,
+    BuslocationComponent
 
 
   ],
@@ -58,7 +61,8 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     MapComponent,
-    MylocationComponent
+    MylocationComponent,
+    BuslocationComponent
 
   ],
   providers: [
@@ -69,7 +73,9 @@ const firebaseConfig = {
     AngularFireAuth,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthServiceProvider,
-    Geolocation
+    Geolocation,
+    BusService,
+    SimutaleProvider
   ]
 })
 export class AppModule { }
