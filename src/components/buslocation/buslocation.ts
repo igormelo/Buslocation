@@ -40,7 +40,7 @@ export class BuslocationComponent implements OnInit {
   updateBusMarker(bus) {
     for (var i = 0, numOfBus = this.busMarker.length; i < numOfBus; i++) {
       //procura o bus e atualiza
-      if (this.busMarker[i].id === bus.id) {
+      if ((<any>this.busMarker[i]).id === (<any>bus).id) {
         this.busMarker[i].setPosition(new google.maps.LatLng(bus.coord.lat, bus.coord.lng));
         return;
       }
