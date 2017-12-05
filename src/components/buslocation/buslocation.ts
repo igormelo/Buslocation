@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { BusService } from './../../providers/bus/bus';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as SlidingMarker from 'marker-animate-unobtrusive';
@@ -8,11 +9,13 @@ import * as SlidingMarker from 'marker-animate-unobtrusive';
  * See https://angular.io/api/core/Component for more info on Angular
  * Components.
  */
+declare var google: any;
 @Component({
   selector: 'buslocation',
-  templateUrl: 'buslocation.html'
+  templateUrl: 'buslocation.html',
+  providers: [BusService]
 })
-export class BuslocationComponent implements OnInit, OnChanges {
+export class BuslocationComponent implements OnInit {
   @Input() map: google.maps.Map;
   public busMarker: Array<google.maps.Marker>;
 
@@ -22,15 +25,12 @@ export class BuslocationComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.fetchAndRefresh();
   }
-  ngOnChanges() {
-    //this.removeBusMarker();
-  }
 
   addBusMarker(bus) {
     let busMarker = new SlidingMarker({
       map: this.map,
       position: new google.maps.LatLng(bus.coord.lat, bus.coord.lng),
-      icon: '../../assets/imgs/location-people.png'
+      icon:'https://i.imgur.com/6Lo4UGC.png'
     });
     busMarker.setDuration(2000);
     busMarker.setEasing('linear');
@@ -40,7 +40,7 @@ export class BuslocationComponent implements OnInit, OnChanges {
   updateBusMarker(bus) {
     for (var i = 0, numOfBus = this.busMarker.length; i < numOfBus; i++) {
       //procura o bus e atualiza
-      if ((<any>this.busMarker[i]).id === (<any>bus).id) {
+      if (this.busMarker[i].id === bus.id) {
         this.busMarker[i].setPosition(new google.maps.LatLng(bus.coord.lat, bus.coord.lng));
         return;
       }
@@ -51,9 +51,9 @@ export class BuslocationComponent implements OnInit, OnChanges {
   fetchAndRefresh() {
     this.busService.getBus(9, 9)
       .subscribe(busData => {
-        (<any>busData).buses.forEach(bus => {
-          this.updateBusMarker(bus);
-        });
+      //(<any>busData).buses.forEach(bus => {
+          this.updateBusMarker(busData[0]);
+        //});
       })
   }
   removeBusMarker() {

@@ -26,8 +26,8 @@ export class HomePage {
 
   }
   ionViewDidLoad() {
-    this.initLat = this.navParams.get('initLat');
-    this.initLng = this.navParams.get('initLng');
+    //this.initLat = this.navParams.get('initLat');
+    //this.initLng = this.navParams.get('initLng');
     this.name = this.navParams.get('name');
     this.photoURL = this.navParams.get('photoURL');
 

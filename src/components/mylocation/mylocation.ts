@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { BusService } from '../../providers/bus/bus';
-
+declare var google: any;
 @Component({
   selector: 'mylocation',
   templateUrl: 'mylocation.html',
@@ -29,11 +29,11 @@ export class MylocationComponent implements OnInit, OnChanges {
       map: this.map,
       animation: google.maps.Animation.BOUNCE,
       position: this.map.getCenter(),
-      icon: '../../assets/imgs/location-people.png'
+      icon:'https://i.imgur.com/HRvHmLT.png'
     })
     setTimeout(() => {
       this.pickupMarker.setAnimation(null);
-    }, 750);
+    }, 300);
     this.showPickupTime();
   }
   removePickupMarker() {

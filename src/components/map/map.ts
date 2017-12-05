@@ -22,7 +22,7 @@ export class MapComponent implements OnInit {
   }
   ngOnInit() {
     this.getCurrentLocation().subscribe(location => {
-      //this.map.panTo(location);
+      this.map.panTo(location);
     })
     this.map = this.createMap();
     this.addMapEventListener();

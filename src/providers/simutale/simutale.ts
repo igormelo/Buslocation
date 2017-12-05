@@ -21,7 +21,9 @@ export class SimutaleProvider {
     if (this.busIndex > this.buses.length) {
       this.busIndex = 0;
     }
-    return Observable.create(observer => observer.next(busData))
+    return Observable.create(
+      observer => observer.next(busData)
+    )
   }
   private busIndex: number = 0;
 
@@ -29,15 +31,15 @@ export class SimutaleProvider {
     bus: [{
       id: 1,
       coord: {
-        lat: -22.907547,
-        lng: -43.174360
+        lat: -22.716080,
+        lng: -43.556403
       }
     },
     {
       id: 2,
       coord: {
-        lat: -22.907622,
-        lng: -43.175186
+        lat: -22.716377,
+        lng: -43.555437
       }
     }]
   };
@@ -45,15 +47,15 @@ export class SimutaleProvider {
     bus: [{
       id: 1,
       coord: {
-        lat: -22.907820,
-        lng: -43.176302
+        lat: -22.716696,
+        lng: -43.554375
       }
     },
     {
       id: 2,
       coord: {
-        lat: -22.908079,
-        lng: -43.176768
+        lat: -22.716357,
+        lng: -43.553420
       }
     }]
   };
