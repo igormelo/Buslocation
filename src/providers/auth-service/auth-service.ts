@@ -19,5 +19,11 @@ export class AuthServiceProvider {
   rememberUser(): string {
     return localStorage.getItem('storedUsername');
   }
+  setRememberPw(password: string){
+    localStorage.setItem('storedPassword', password);
+  }
+  rememberPassword(): string{
+    return localStorage.getItem('storedPassword');
+  }
 
 }

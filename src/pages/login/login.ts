@@ -1,8 +1,9 @@
+import { window } from 'rxjs/operator/window';
 import { MapComponent } from './../../components/map/map';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
 import { HomePage } from './../home/home';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -63,8 +64,11 @@ export class LoginPage {
         this.navCtrl.setRoot(HomePage, { name: this.email, initLat: this.initLat, initLng: this.initLng })
       })
       .catch(error => {
-        this.response = false;
-        this.alert(error.message);
+        if(error.message == 'The password is invalid or the user does not have a password.'){
+          this.alert("Senha invalida");
+          this.response = false;
+        }
+        
       });
 
   }

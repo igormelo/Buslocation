@@ -13,7 +13,9 @@
         </button>
     <ion-title>{{name}}</ion-title>
     <ion-buttons end>
-      <button (click)="map.centerLocation()"></button>
+      <button ion-button large (click)="logout()">
+      <ion-icon name="log-out"></ion-icon>
+    </button>
     </ion-buttons>
   </ion-toolbar>
   <div class="map-wrapper">

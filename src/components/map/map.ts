@@ -21,6 +21,8 @@ export class MapComponent implements OnInit {
 
   }
   ngOnInit() {
+    window.localStorage.getItem('user');
+    window.localStorage.getItem('pass');
     this.getCurrentLocation().subscribe(location => {
       this.map.panTo(location);
     })
@@ -47,7 +49,6 @@ export class MapComponent implements OnInit {
         .then(resp => {
           let lat = resp.coords.latitude;
           let lng = resp.coords.longitude;
-
           let location = new google.maps.LatLng(lat, lng);
           observable.next(location);
           loading.dismiss();
@@ -59,11 +60,11 @@ export class MapComponent implements OnInit {
     return Obs;
   }
 
-  createMap(location = new google.maps.LatLng(-22.9068467, -43.1728965)) {
+  createMap(location = new google.maps.LatLng(9, 9)) {
     let options = {
       center: location,
       zoom: 16,
-      mapTypeId: google.maps.MapTypeId.TERRAIN
+      mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     let mapElement = document.getElementById("map_canvas");
     let map = new google.maps.Map(mapElement, options);

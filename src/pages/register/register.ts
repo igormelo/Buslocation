@@ -33,7 +33,9 @@ export class RegisterPage {
         this.navCtrl.push(LoginPage);
       })
       .catch(error => {
-        this.alert(error.message);
+        if(error.message == 'The email address is already in use by another account.'){
+          this.alert('Nome de usuário ja cadastrado');
+        }
       });
   }
 
@@ -62,7 +64,7 @@ export class RegisterPage {
   }
   alert(message: string) {
     this.alertCtrl.create({
-      title: 'Info!',
+      title: 'Erro ao cadastrar!',
       subTitle: message,
       buttons: ['OK']
     }).present();

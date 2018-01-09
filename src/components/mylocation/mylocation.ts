@@ -1,3 +1,4 @@
+import * as SlidingMarker from 'marker-animate-unobtrusive';
 import { Component, OnInit, OnChanges, Input } from '@angular/core';
 import { BusService } from '../../providers/bus/bus';
 declare var google: any;
@@ -10,12 +11,11 @@ export class MylocationComponent implements OnInit, OnChanges {
   @Input() isPinSet: boolean;
   @Input() map: google.maps.Map;
   private popup: google.maps.InfoWindow;
-  private pickupMarker: google.maps.Marker;
+  private pickupMarker: SlidingMarker;
 
   constructor() {
   }
   ngOnInit() {
-    console.log("iniciou");
   }
   ngOnChanges(changes) {
     if (this.isPinSet) {
@@ -25,19 +25,20 @@ export class MylocationComponent implements OnInit, OnChanges {
     }
   }
   showPickupMarker() {
-    this.pickupMarker = new google.maps.Marker({
+    this.pickupMarker = new SlidingMarker({
       map: this.map,
-      animation: google.maps.Animation.BOUNCE,
       position: this.map.getCenter(),
       icon:'https://i.imgur.com/HRvHmLT.png'
-    })
-    setTimeout(() => {
+    });
+    /*setTimeout(() => {
       this.pickupMarker.setAnimation(null);
-    }, 300);
+    }, 300);*/
     this.showPickupTime();
   }
   removePickupMarker() {
     if (this.pickupMarker) {
+      this.pickupMarker.setDuration(1000);
+      this.pickupMarker.setEasing('linear');
       this.pickupMarker.setMap(null);
     }
 
@@ -51,5 +52,6 @@ export class MylocationComponent implements OnInit, OnChanges {
       this.popup.open(this.map, this.pickupMarker);
     })
   }
+
 
 }
