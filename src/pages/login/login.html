@@ -11,12 +11,14 @@
     <ion-item>
       <ion-label floating class='labelemail'>
         <ion-icon name="call"></ion-icon>+55</ion-label>
-      <ion-input type="number" class="phone" maxlength="14" size="14" placeholder="(21)99999-9999" [(ngModel)]="code"></ion-input>
+      <ion-input type="number" class="phone" maxlength="14" size="14" placeholder="(21)99999-9999" [(ngModel)]="this.number"></ion-input>
     </ion-item>
   </ion-col>
   <ion-row>
     <ion-col class="signup">
-      <button ion-button class="submit-btn" round full type="submit">Ok</button>
+      <button ion-button class="submit-btn" round full (click)="send()">Ok</button>
+      <button ion-button class="submit-btn" (click)="verify()">verify</button>
+      <div id="recaptcha-container"></div>
     </ion-col>
   </ion-row>
   <ion-fab center bottom>

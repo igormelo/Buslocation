@@ -23,7 +23,7 @@ import firebase from 'firebase';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  //public recaptcha: firebase.auth.RecaptchaVerifier;
+  public recaptcha: firebase.auth.RecaptchaVerifier;
   public remember: boolean;
   loginForm: FormGroup;
   public response: boolean;
@@ -41,6 +41,7 @@ export class LoginPage {
     public fb: FormBuilder, private alertCtrl: AlertController) {
     this.initForm(fb);
     this.user = new User();
+
     const storedUsername = this.authService.rememberUser();
     if (storedUsername) {
       this.remember = true;
@@ -48,6 +49,12 @@ export class LoginPage {
     }
   }
   ionViewDidLoad() {
+    this.recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible',
+      'callback': (res) => {
+        this.send();
+      }
+    });
   }
 
   //Botao de login do usuario
@@ -138,13 +145,20 @@ export class LoginPage {
 
   }
   send() {
-    (<any>window).FirebasePlugin.verifyPhoneNumber(this.number, 60, (credential) => {
-      console.log(credential);
-      this.verificationId = credential.verificationId;
-
-    }, (error) => {
-      console.error(error);
-    });
+    firebase.auth().signInWithPhoneNumber("+55" + this.number, this.recaptcha).then((confirmationRes) => {
+      var code = prompt(`Enviamos o codigo para ${this.number}, entre aqui`, "");
+      if (code) {
+        confirmationRes.confirm(code).then((result) => {
+          console.log(result);
+        })
+      }
+    })
+  }
+  verify() {
+    let signinCredential = firebase.auth.PhoneAuthProvider.credential(this.verificationId, this.code);
+    firebase.auth().signInWithCredential(signinCredential).then((info) => {
+      console.log(info);
+    })
   }
 
 }
