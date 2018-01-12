@@ -1,7 +1,7 @@
 <ion-content class="bg-style">
-  <video autoplay loop muted id="video">
+  <!--<video autoplay loop muted id="video">
     <source src="http://thenewcode.com/assets/videos/lake.mp4" type="video/mp4">
-  </video>
+  </video>-->
   <ion-row class="logo">
     <ion-col></ion-col>
     <ion-col width-100>
@@ -29,7 +29,9 @@
       <ion-col class="signup">
         <button ion-button class="submit-btn" round full type="submit"><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login'}}</button>
         <button ion-button class="register-btn" block clear (click)="cadastrar()">Cadastrar</button>
-        <button ion-button (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
+        <ion-fab center id="fab">
+          <button ion-fab (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
+        </ion-fab>
       </ion-col>
     </ion-row>
     <ion-item class="check">

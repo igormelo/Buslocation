@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { User } from '../../models/user';
 import { LoginPage } from '../login/login';
+import { HomePage } from '../home/home';
 
 /**
  * Generated class for the RegisterPage page.
@@ -21,20 +22,21 @@ export class RegisterPage {
   registerForm: FormGroup;
   user = {} as User
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private afAth: AngularFireAuth, private alertCtrl: AlertController, public fb: FormBuilder) {
+    private afAuth: AngularFireAuth, private alertCtrl: AlertController, public fb: FormBuilder) {
     this.user = new User();
     this.initForm(fb);
   }
 
   register(user: User) {
-    this.afAth.auth.createUserWithEmailAndPassword(user.email, user.password)
+    this.afAuth.auth.createUserWithEmailAndPassword(user.email, user.password)
       .then(data => {
-        this.alert('Registrado!');
-        this.navCtrl.push(LoginPage);
+        this.alert('Registrado com sucesso!', 'Registrado');
+        this.sendEmailVerification();
+        this.navCtrl.setRoot(HomePage, { name: data.email.split('@')[0].toUpperCase() });
       })
       .catch(error => {
-        if(error.message == 'The email address is already in use by another account.'){
-          this.alert('Nome de usuário ja cadastrado');
+        if (error.message == 'The email address is already in use by another account.') {
+          this.alert('Nome de usuário ja cadastrado', 'Erro ao registrar');
         }
       });
   }
@@ -62,12 +64,19 @@ export class RegisterPage {
     this.user = new User(value.email, value.password);
     this.register(value);
   }
-  alert(message: string) {
+  alert(message: string, title: string) {
     this.alertCtrl.create({
-      title: 'Erro ao cadastrar!',
+      title: title,
       subTitle: message,
       buttons: ['OK']
     }).present();
+  }
+  sendEmailVerification() {
+    var user = this.afAuth.auth.currentUser;
+    user.sendEmailVerification().then(() => {
+      console.log('enviado');
+    })
+
   }
 
 

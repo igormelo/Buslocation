@@ -1,14 +1,15 @@
+import { SplashPage } from './../splash/splash';
 import { window } from 'rxjs/operator/window';
 import { MapComponent } from './../../components/map/map';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
-import { HomePage } from './../home/home';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { HomePage } from '../home/home';
 /**
  * Generated class for the LoginPage page.
  *
@@ -28,6 +29,7 @@ export class LoginPage {
   loginForm: FormGroup;
   public response: boolean;
   user = {} as User;
+  public isLogged: boolean;
   email: string;
   name: any;
   img: any;
@@ -44,31 +46,32 @@ export class LoginPage {
     }
   }
   ionViewDidLoad() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.initLat = position.coords.latitude;
-        this.initLng = position.coords.longitude;
-      });
-    }
   }
 
   //Botao de login do usuario
-  login(user: User) {
+  async login(user: User) {
     if (this.response) return;
     this.response = true;
-    this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
+    await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
       .then(data => {
-        this.authService.setRememberUser(data.email);
-        const email = data.email;
-        this.email = email.split('@')[0].toUpperCase(0);
-        this.navCtrl.setRoot(HomePage, { name: this.email, initLat: this.initLat, initLng: this.initLng })
+        console.log(data.emailVerified);
+        if (data.emailVerified) {
+          this.authService.setRememberUser(data.email);
+          const email = data.email;
+          this.email = email.split('@')[0].toUpperCase(0);
+          this.navCtrl.push(HomePage, { name: this.email })
+        } else {
+          this.response = false;
+          this.alert('Verifique seu email.');
+          this.sendEmailVerification();
+        }
       })
       .catch(error => {
-        if(error.message == 'The password is invalid or the user does not have a password.'){
+        if (error.message == 'The password is invalid or the user does not have a password.') {
           this.alert("Senha invalida");
           this.response = false;
         }
-        
+
       });
 
   }
@@ -77,10 +80,10 @@ export class LoginPage {
     this.facebook.login(['email']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
       firebase.auth().signInWithCredential(facebookCredential)
-        .then((sucess) => {
-          this.user.email = sucess.email;
-          this.name = sucess.displayName;
-          this.img = sucess.photoURL;
+        .then((success) => {
+          this.user.email = success.email;
+          this.name = success.displayName;
+          this.img = success.photoURL;
           this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img, initLat: this.initLat, initLng: this.initLng });
         });
     });
@@ -125,5 +128,11 @@ export class LoginPage {
   cadastrar() {
     this.navCtrl.push('RegisterPage');
   }
+  sendEmailVerification() {
+    var user = this.afAuth.auth.currentUser;
+    user.sendEmailVerification().then(() => {
+      console.log('enviado');
+    })
 
+  }
 }

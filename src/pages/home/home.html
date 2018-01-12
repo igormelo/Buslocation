@@ -1,24 +1,19 @@
-<ion-header>
-  <!--<ion-navbar>
-    <button ion-button icon-only menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-    <img *ngIf="this.photoURL" [src]="this.photoURL" style="border-radius: 50%;height: 50px; width: 50px" align="left">
-  </ion-navbar>-->
-</ion-header>
-<ion-content class="home">
-  <ion-toolbar no-border-top color="primary">
-    <button ion-button icon-only menuToggle>
-          <ion-icon name="menu" (click)="menuItem()"></ion-icon>
-        </button>
+<ion-header no-border>
+  <ion-toolbar transparent>
+    <button ion-button menuToggle>
+              <ion-icon name="menu" (click)="menuItem()"></ion-icon>
+            </button>
     <ion-title>{{name}}</ion-title>
-    <ion-buttons end>
-      <button ion-button large (click)="logout()">
-      <ion-icon name="log-out"></ion-icon>
-    </button>
-    </ion-buttons>
+    <ion-fab>
+      <ion-icon name="locate" (click)="logout()"></ion-icon>
+    </ion-fab>
   </ion-toolbar>
-  <div class="map-wrapper">
-    <map #map></map>
-  </div>
-</ion-content>
+</ion-header>
+<div class="map-wrapper">
+  <ion-fab right bottom>
+    <button ion-fab color="primary">
+    <ion-icon name="locate" (click)="map.centerLocation()"></ion-icon>
+    </button>
+  </ion-fab>
+  <map #map></map>
+</div>

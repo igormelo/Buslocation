@@ -27,8 +27,7 @@ export class MylocationComponent implements OnInit, OnChanges {
   showPickupMarker() {
     this.pickupMarker = new SlidingMarker({
       map: this.map,
-      position: this.map.getCenter(),
-      icon:'https://i.imgur.com/HRvHmLT.png'
+      position: this.map.getCenter()
     });
     /*setTimeout(() => {
       this.pickupMarker.setAnimation(null);

@@ -1,3 +1,4 @@
+import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
@@ -17,18 +18,20 @@ declare var google: any;
 export class MapComponent implements OnInit {
   public map: google.maps.Map;
   public mapIdle: boolean;
-  constructor(public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public geolocation: Geolocation) {
+  public loc: any;
+  constructor(public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public geolocation: Geolocation, public afAuth: AngularFireAuth) {
 
   }
   ngOnInit() {
-    window.localStorage.getItem('user');
-    window.localStorage.getItem('pass');
-    this.getCurrentLocation().subscribe(location => {
-      this.map.panTo(location);
-    })
-    this.map = this.createMap();
+    this.map = this.createMap(this.loc);
     this.addMapEventListener();
+    this.getCurrentLocation().subscribe(location => {
+      //this.map.panTo(location);
+      this.centerLocation(location);
+    })
+
   }
+
   addMapEventListener() {
     google.maps.event.addListener(this.map, 'dragstart', () => {
       this.mapIdle = false;
@@ -38,11 +41,12 @@ export class MapComponent implements OnInit {
     })
   }
 
-  getCurrentLocation() {
+  getCurrentLocation(): Observable<google.maps.LatLng> {
     let loading = this.loadingCtrl.create({
       content: "Aguarde..."
     });
     loading.present();
+
     let locationOptions = { timeout: 20000, enableHighAccuracy: true };
     let Obs = Observable.create(observable => {
       this.geolocation.getCurrentPosition(locationOptions)
@@ -50,8 +54,9 @@ export class MapComponent implements OnInit {
           let lat = resp.coords.latitude;
           let lng = resp.coords.longitude;
           let location = new google.maps.LatLng(lat, lng);
-          observable.next(location);
+          this.map = this.createMap(location);
           loading.dismiss();
+
         }, (err) => {
           console.log("Geolocation error:" + err);
           loading.dismiss();
@@ -60,10 +65,76 @@ export class MapComponent implements OnInit {
     return Obs;
   }
 
-  createMap(location = new google.maps.LatLng(9, 9)) {
+  createMap(location) {
+    var style = [];
+    var styledMap = [
+      {
+        "featureType": "administrative.country",
+        "elementType": "geometry.fill",
+        "stylers": [
+          {
+            "color": "#d665d2"
+          }
+        ]
+      },
+      {
+        "featureType": "administrative.land_parcel",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi",
+        "elementType": "labels.text",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "poi.business",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road",
+        "elementType": "labels.icon",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "road.local",
+        "elementType": "labels",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      },
+      {
+        "featureType": "transit",
+        "stylers": [
+          {
+            "visibility": "off"
+          }
+        ]
+      }
+    ]
     let options = {
       center: location,
       zoom: 16,
+      styles: styledMap,
+      disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
     let mapElement = document.getElementById("map_canvas");
@@ -79,6 +150,10 @@ export class MapComponent implements OnInit {
         this.map.panTo(currentLocation);
       });
     }
+  }
+  isNight() {
+    let time = new Date().getHours();
+    return (time > 5 && time < 19) ? false : true;
   }
 
 }

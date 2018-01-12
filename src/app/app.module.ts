@@ -1,3 +1,4 @@
+import { SplashPage } from './../pages/splash/splash';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MylocationComponent } from './../components/mylocation/mylocation';
 import { RegisterPage } from './../pages/register/register';
@@ -24,6 +25,7 @@ import { BusService } from '../providers/bus/bus';
 import { SimutaleProvider } from '../providers/simutale/simutale';
 import { BuslocationComponent } from '../components/buslocation/buslocation';
 
+
 const firebaseConfig = {
   apiKey: "AIzaSyA_PvFDFNxXV4gnBxGJwEOVkHU597rPC8M",
   authDomain: "testez-fbf7b.firebaseapp.com",
@@ -41,9 +43,9 @@ const firebaseConfig = {
     HomePage,
     LoginPage,
     MapComponent,
+    SplashPage,
     MylocationComponent,
     BuslocationComponent
-
 
   ],
   imports: [
@@ -60,6 +62,7 @@ const firebaseConfig = {
     AboutPage,
     ContactPage,
     HomePage,
+    SplashPage,
     MapComponent,
     MylocationComponent,
     BuslocationComponent
