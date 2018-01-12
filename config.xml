@@ -104,6 +104,6 @@
         <variable name="APP_NAME" value="Buslocation" />
     </plugin>
     <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
-    <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
+    <plugin name="cordova-plugin-firebase" spec="https://github.com/jestcastro/cordova-plugin-firebase" />
 </widget>

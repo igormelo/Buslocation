@@ -5,11 +5,11 @@ import { AuthServiceProvider } from './../../providers/auth-service/auth-service
 import { User } from './../../models/user';
 import { Component, Input, OnInit } from '@angular/core';
 import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
-import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HomePage } from '../home/home';
+import firebase from 'firebase';
 /**
  * Generated class for the LoginPage page.
  *
@@ -23,8 +23,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  initLat: number;
-  initLng: number;
+  //public recaptcha: firebase.auth.RecaptchaVerifier;
   public remember: boolean;
   loginForm: FormGroup;
   public response: boolean;
@@ -33,6 +32,8 @@ export class LoginPage {
   email: string;
   name: any;
   img: any;
+  verificationId: any;
+  code: string = "";
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
     public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController, private authService: AuthServiceProvider,
@@ -84,7 +85,7 @@ export class LoginPage {
           this.user.email = success.email;
           this.name = success.displayName;
           this.img = success.photoURL;
-          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img, initLat: this.initLat, initLng: this.initLng });
+          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img });
         });
     });
   }
@@ -135,4 +136,14 @@ export class LoginPage {
     })
 
   }
+  send() {
+    (<any>window).FirebasePlugin.verifyPhoneNumber("5521982494000", 60, function (credential) {
+      console.log(credential);
+      this.verificationId = credential.verificationId;
+
+    }, (error) => {
+      console.error(error);
+    });
+  }
+
 }

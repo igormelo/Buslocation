@@ -1,42 +1,20 @@
-<ion-content class="bg-style">
+<ion-content scroll="false" class="content">
   <!--<video autoplay loop muted id="video">
     <source src="http://thenewcode.com/assets/videos/lake.mp4" type="video/mp4">
   </video>-->
   <ion-row class="logo">
-    <ion-col></ion-col>
-    <ion-col width-100>
-      <img src="https://cdn.onlinewebfonts.com/svg/img_537881.png" />
+    <ion-col width-10>
+      <img src="https://i.imgur.com/DPVV4bv.png" />
     </ion-col>
-    <ion-col></ion-col>
   </ion-row>
-  <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)">
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label floating class='labelemail'>
-            <ion-icon name="person"></ion-icon> Email</ion-label>
-          <ion-input type="text" [formControl]="loginForm.controls['email']">
-          </ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label floating class='labelpass'>
-            <ion-icon name="lock"></ion-icon> Senha</ion-label>
-          <ion-input type="password" round [formControl]="loginForm.controls['password']"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col class="signup">
-        <button ion-button class="submit-btn" round full type="submit"><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login'}}</button>
-        <button ion-button class="register-btn" block clear (click)="cadastrar()">Cadastrar</button>
-        <ion-fab center id="fab">
-          <button ion-fab (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
-        </ion-fab>
-      </ion-col>
-    </ion-row>
-    <ion-item class="check">
-      <ion-label>Me lembrar nesse dispositivo</ion-label>
-      <ion-checkbox [formControl]="loginForm.controls['rememberUser']"></ion-checkbox>
+  <ion-col>
+    <ion-item>
+      <ion-label floating class='labelemail'>
+        <ion-icon name="call"></ion-icon>+55</ion-label>
+      <ion-input type="number" class="phone" maxlength="14" size="14" placeholder="(21)99999-9999"></ion-input>
     </ion-item>
-  </form>
+  </ion-col>
+  <ion-fab center bottom>
+    <button ion-fab (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
+  </ion-fab>
 </ion-content>
