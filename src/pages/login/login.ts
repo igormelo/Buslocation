@@ -34,6 +34,7 @@ export class LoginPage {
   img: any;
   verificationId: any;
   code: string = "";
+  number: string;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
     public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController, private authService: AuthServiceProvider,
@@ -137,7 +138,7 @@ export class LoginPage {
 
   }
   send() {
-    (<any>window).FirebasePlugin.verifyPhoneNumber("5521982494000", 60, function (credential) {
+    (<any>window).FirebasePlugin.verifyPhoneNumber(this.number, 60, (credential) => {
       console.log(credential);
       this.verificationId = credential.verificationId;
 
