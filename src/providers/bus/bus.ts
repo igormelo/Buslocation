@@ -19,6 +19,7 @@ export class BusService {
     this.simulate = new SimutaleProvider();
   }
   getBus(lat, lng) {
+    console.log("oi");
     return Observable
       .interval(2000)
       .switchMap(() => this.simulate.getBus(lat, lng))

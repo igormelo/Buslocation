@@ -18,7 +18,7 @@ export class SimutaleProvider {
     let busData = this.buses[this.busIndex];
     this.busIndex++;
 
-    if (this.busIndex > this.buses.length) {
+    if (this.busIndex > this.buses.length - 1) {
       this.busIndex = 0;
     }
     return Observable.create(

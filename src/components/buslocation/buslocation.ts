@@ -1,7 +1,9 @@
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { BusService } from './../../providers/bus/bus';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as SlidingMarker from 'marker-animate-unobtrusive';
+import * as firebase from 'firebase/app';
 
 /**
  * Generated class for the BuslocationComponent component.
@@ -17,21 +19,41 @@ declare var google: any;
 })
 export class BuslocationComponent implements OnInit {
   @Input() map: google.maps.Map;
-  public busMarker: google.maps.Marker;
-
-  constructor(public busService: BusService) {
+  public busMarker: Array<google.maps.Marker>;
+  res: any = {};
+  lat: number;
+  lng: number;
+  motorista: Array<any>;
+  constructor(private af: AngularFireDatabase, private busService: BusService) {
+    this.busMarker = [];
   }
   ngOnInit() {
-    this.addBusMarker();
+    this.init();
+  }
+  ngOnChanges() {
   }
 
-  addBusMarker() {
-    this.busMarker = new google.maps.Marker({
+  addBusMarker(bus) {
+    let busMarker = new google.maps.Marker({
       map: this.map,
-      position: new google.maps.LatLng(-22.718175,-43.553750),
-      icon:'https://i.imgur.com/6Lo4UGC.png'
+      position: new google.maps.LatLng(bus.lat, bus.lng),
+      icon: 'https://i.imgur.com/6Lo4UGC.png'
     });
   }
+  removeBusMarkers() {
+    let numOfCars = this.busMarker.length;
+    while (numOfCars--) {
+      let buses = this.busMarker.pop();
+      buses.setMap(null);
+    }
+  }
 
+  init() {
+    this.af.list("Igor Melo").valueChanges().subscribe(snap => {
+      snap.forEach(data => {
+        this.addBusMarker(data);
+      })
+    })
+  }
 
 }

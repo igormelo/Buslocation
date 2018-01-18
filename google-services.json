@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "327150452559",
+    "firebase_url": "https://testez-fbf7b.firebaseio.com",
+    "project_id": "testez-fbf7b",
+    "storage_bucket": "testez-fbf7b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327150452559:android:a4b20ef6cea81571",
+        "android_client_info": {
+          "package_name": "com.buslocation.sms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327150452559-bpbn1qpj7pmdqo4uekl4ghd649ev7j48.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buslocation.sms",
+            "certificate_hash": "9b100d767bb332874ca57b3938508d94fb26fcee"
+          }
+        },
+        {
+          "client_id": "327150452559-pai2kmc38dpotsbc7qpcgktnsdhaihk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLqS3lISTVgpMK1Nb3ZaOYc1-iufvdidg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327150452559-pai2kmc38dpotsbc7qpcgktnsdhaihk9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

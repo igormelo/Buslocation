@@ -1,7 +1,7 @@
 import { MapComponent } from './../components/map/map';
 import { SplashPage } from './../pages/splash/splash';
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Platform, NavController, ModalController } from 'ionic-angular';
+import { Platform, NavController, ModalController, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { HomePage } from '../pages/home/home';
@@ -23,13 +23,11 @@ export class MyApp {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need
       splashScreen.hide();
-
       const unsubscribe = this.afAuth.auth.onAuthStateChanged((user) => {
         const verify = this.afAuth.auth.currentUser;
-        if (user && verify.emailVerified) {
+        if (user) {
           console.log(user);
-          this.email = user.email.split('@')[0].toUpperCase(0);
-          this.navCtrl.setRoot(HomePage, { name: this.email });
+          this.navCtrl.setRoot(HomePage, { name: user.displayName, img: user.photoURL });
           unsubscribe();
         } else {
           this.rootPage = LoginPage;

@@ -29,7 +29,6 @@ export class MapComponent implements OnInit {
       //this.map.panTo(location);
       this.centerLocation(location);
     })
-
   }
 
   addMapEventListener() {

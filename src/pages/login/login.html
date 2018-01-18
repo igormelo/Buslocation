@@ -1,27 +1,9 @@
 <ion-content scroll="false" class="content">
-  <!--<video autoplay loop muted id="video">
-    <source src="http://thenewcode.com/assets/videos/lake.mp4" type="video/mp4">
-  </video>-->
-  <ion-row class="logo">
-    <ion-col width-10>
-      <img src="https://i.imgur.com/cbw5EZj.png" />
-    </ion-col>
-  </ion-row>
-  <ion-col>
-    <ion-item>
-      <ion-label floating class='labelemail'>
-        <ion-icon name="call"></ion-icon>+55</ion-label>
-      <ion-input type="number" class="phone" maxlength="14" size="14" placeholder="(21)99999-9999" [(ngModel)]="this.number"></ion-input>
-    </ion-item>
-  </ion-col>
+  <img src="assets/imgs/buslocation.png" alt="bus" class="logo">
   <ion-row>
-    <ion-col class="signup">
-      <button ion-button class="submit-btn" round full (click)="send()">Ok</button>
-      <button ion-button class="submit-btn" (click)="verify()">verify</button>
-      <div id="recaptcha-container"></div>
+    <ion-col>
+      <button ion-button full (click)="facebookLogin()" round class="submit-btn" icon-end><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login com facebook'}}<ion-icon name="logo-facebook"></ion-icon></button>
     </ion-col>
+    <button ion-button class="register-btn" block clear (click)="cadastrar()">Cadastrar</button>
   </ion-row>
-  <ion-fab center bottom>
-    <button ion-fab (click)="facebookLogin()" round><ion-icon name="logo-facebook"></ion-icon></button>
-  </ion-fab>
 </ion-content>

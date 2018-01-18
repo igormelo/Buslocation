@@ -9,20 +9,22 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { HomePage } from '../home/home';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 /**
- * Generated class for the LoginPage page.
+ * Generated class for the LoginPage page.cls
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
-
+declare var FirebasePlugin: any;
 @IonicPage()
+
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',
 })
 export class LoginPage {
+
   public recaptcha: firebase.auth.RecaptchaVerifier;
   public remember: boolean;
   loginForm: FormGroup;
@@ -33,7 +35,7 @@ export class LoginPage {
   name: any;
   img: any;
   verificationId: any;
-  code: string = "";
+  code: string;
   number: string;
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
@@ -49,51 +51,18 @@ export class LoginPage {
     }
   }
   ionViewDidLoad() {
-    this.recaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-      'size': 'invisible',
-      'callback': (res) => {
-        this.send();
-      }
-    });
+
   }
 
-  //Botao de login do usuario
-  async login(user: User) {
+  facebookLogin() {
     if (this.response) return;
     this.response = true;
-    await this.afAuth.auth.signInWithEmailAndPassword(user.email, user.password)
-      .then(data => {
-        console.log(data.emailVerified);
-        if (data.emailVerified) {
-          this.authService.setRememberUser(data.email);
-          const email = data.email;
-          this.email = email.split('@')[0].toUpperCase(0);
-          this.navCtrl.push(HomePage, { name: this.email })
-        } else {
-          this.response = false;
-          this.alert('Verifique seu email.');
-          this.sendEmailVerification();
-        }
-      })
-      .catch(error => {
-        if (error.message == 'The password is invalid or the user does not have a password.') {
-          this.alert("Senha invalida");
-          this.response = false;
-        }
-
-      });
-
-  }
-  //Botao de login com Facebook
-  facebookLogin() {
-    this.facebook.login(['email']).then(res => {
+    this.facebook.login(['email', 'public_profile', 'user_friends']).then(res => {
       const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
       firebase.auth().signInWithCredential(facebookCredential)
         .then((success) => {
-          this.user.email = success.email;
-          this.name = success.displayName;
           this.img = success.photoURL;
-          this.navCtrl.setRoot(HomePage, { name: this.name, photoURL: this.img });
+          this.navCtrl.setRoot(HomePage, { name: success.displayName, img: success.photoURL });
         });
     });
   }
@@ -120,15 +89,15 @@ export class LoginPage {
   submitForm(value: any) {
     if (!this.loginForm.valid) return;
     this.user = new User(value.email, value.password);
-    this.login(value);
+    //this.login(value);
   }
   //Lembrar usuario
   rememberUser() {
     if (this.response) return;
   }
-  alert(message: string) {
+  alert(message: string, title: string) {
     this.alertCtrl.create({
-      title: 'Atenção!',
+      title: title,
       subTitle: message,
       buttons: ['OK']
     }).present();
@@ -137,28 +106,6 @@ export class LoginPage {
   cadastrar() {
     this.navCtrl.push('RegisterPage');
   }
-  sendEmailVerification() {
-    var user = this.afAuth.auth.currentUser;
-    user.sendEmailVerification().then(() => {
-      console.log('enviado');
-    })
 
-  }
-  send() {
-    firebase.auth().signInWithPhoneNumber("+55" + this.number, this.recaptcha).then((confirmationRes) => {
-      var code = prompt(`Enviamos o codigo para ${this.number}, entre aqui`, "");
-      if (code) {
-        confirmationRes.confirm(code).then((result) => {
-          console.log(result);
-        })
-      }
-    })
-  }
-  verify() {
-    let signinCredential = firebase.auth.PhoneAuthProvider.credential(this.verificationId, this.code);
-    firebase.auth().signInWithCredential(signinCredential).then((info) => {
-      console.log(info);
-    })
-  }
 
 }

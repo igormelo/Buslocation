@@ -10,16 +10,19 @@ import { LoginPage } from '../login/login';
 import { window } from 'rxjs/operator/window';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { StatusBar } from '@ionic-native/status-bar';
+import { AboutPage } from '../about/about';
+import { Nav } from 'ionic-angular';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  @ViewChild(Nav) nav: Nav;
   name: string;
   photoURL: any;
-  initLat: number;
-  initLng: number;
+  lat: number;
+  lng: number;
   public isLogged: boolean;
   email: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public maps: GoogleMaps, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private statusBar: StatusBar) {
@@ -27,14 +30,7 @@ export class HomePage {
   }
   ionViewDidLoad() {
     this.name = this.navParams.get('name');
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        this.initLat = position.coords.latitude;
-        this.initLng = position.coords.longitude;
-        this.af.object(this.name).update({ lat: this.initLat, lng: this.initLng });
-      });
-    }
-
+    this.photoURL = this.navParams.get('img');
     this.toastCtrl.create({
       message: `Bem vindo:  ${this.name}`,
       duration: 3000
@@ -45,5 +41,8 @@ export class HomePage {
     this.navCtrl.setRoot(LoginPage);
   }
 
+  about() {
+    this.navCtrl.push(AboutPage, { name: this.name, img: this.photoURL })
+  }
 
 }

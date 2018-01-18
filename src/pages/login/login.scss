@@ -1,5 +1,5 @@
 .content{
-    background-color: rgba(64, 55, 55, 0.44) g
+    background-color: rgb(37, 36, 36)
 }
 .item.item-input{
     background-color: transparent;
@@ -43,31 +43,17 @@ ion-row {
     text-align: center;
   }
   .logo {
-    padding-top: 80px;
+    padding-top: 200px;
     padding-bottom: 20px;
+    width: 90%;
+    display: block;
+    margin: 0 auto;
   }
   .submit-btn {
     font-size: 1.3em;
-    /*border: 1px solid #ffffff;*/
+    background-color: #3B5998;
+    height: 50px;
   }
-  .register-btn {
-    color: #ffffff;
-    font-size: 1.2em;
+  .register-btn{
+      color: white;
   }
-  .check{
-      background: transparent;
-      border-color: transparent;
-  }
-.labelemail{
-    font-size: 1.2em;
-    color: black;
-}
-.labelpass{
-    font-size: 1em;
-    color: white;
-}
-#fab{
-    padding-top: 20%;
-}
-
-
