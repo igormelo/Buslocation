@@ -1,1 +1,32 @@
-<ion-nav #nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="content">
+    <ion-header>
+        <ion-toolbar color="toolbarColor" style="height: 100px">
+            <ion-title color="secondary">Igor Melo</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <ion-item menuClose color="itemColor">
+                <ion-thumbnail>
+                    <img [src]="this.image" class="img" onError="src='http://americanconstruction.net/wp-content/uploads/2015/10/upload-empty.png'">
+                </ion-thumbnail>
+            </ion-item>
+
+            <ion-item-group>
+                <button ion-item>
+                    <ion-label color="dark">Como usar</ion-label>
+                </button>
+                <button ion-item>
+                    <ion-label color="dark">Minhas viagens</ion-label>
+                </button>
+                <button ion-item>
+                    <ion-label color="dark">Configurações</ion-label>
+                </button>
+                <button ion-item (click)="logout()">
+                    <ion-label color="dark">Sair</ion-label>
+                </button>
+            </ion-item-group>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<ion-nav #content id="nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>

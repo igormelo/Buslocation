@@ -24,10 +24,19 @@ export class SplashPage {
   }
 
   ionViewDidLoad() {
-    this.name = this.navParams.get('name');
+    this.splash.hide();
+    const unsubscribe = this.afAuth.auth.onAuthStateChanged((user) => {
+      const verify = this.afAuth.auth.currentUser;
+      if (user) {
+        this.navCtrl.setRoot(HomePage, { name: user.displayName, img: user.photoURL });
+        unsubscribe();
+      } else {
+        //this.navCtrl.setRoot(LoginPage);
+        this.navCtrl.setRoot(LoginPage);
+      }
+    })
     setTimeout(() => {
-      this.navCtrl.push(HomePage, { name: this.name });
-    }, 1000)
+    }, 3000)
   }
 
 }

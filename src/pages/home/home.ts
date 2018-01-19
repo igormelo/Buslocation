@@ -3,7 +3,7 @@ import { MylocationComponent } from './../../components/mylocation/mylocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, Input } from '@angular/core';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { CapitalizePipe } from '../../pipes/capitalize/capitalize';
 import { LoginPage } from '../login/login';
@@ -13,12 +13,12 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AboutPage } from '../about/about';
 import { Nav } from 'ionic-angular';
 
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
-  @ViewChild(Nav) nav: Nav;
   name: string;
   photoURL: any;
   lat: number;

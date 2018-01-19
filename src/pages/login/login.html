@@ -2,7 +2,7 @@
   <img src="assets/imgs/buslocation.png" alt="bus" class="logo">
   <ion-row>
     <ion-col>
-      <button ion-button full (click)="facebookLogin()" round class="submit-btn" icon-end><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login com facebook'}}<ion-icon name="logo-facebook"></ion-icon></button>
+      <button ion-button full (click)="facebookLogin()" round class="submit-btn" icon-end><ion-spinner item-start name="crescent" *ngIf="response"></ion-spinner>{{response === true? ' ' : 'Login com facebook'}}<ion-icon name="logo-facebook" *ngIf="!response"></ion-icon></button>
     </ion-col>
     <button ion-button class="register-btn" block clear (click)="cadastrar()">Cadastrar</button>
   </ion-row>

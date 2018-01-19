@@ -3,10 +3,7 @@
     <button ion-button menuToggle>
               <ion-icon name="menu"></ion-icon>
             </button>
-    <ion-title>{{name}}</ion-title>
-    <ion-fab>
-      <ion-icon name="locate" (click)="logout()"></ion-icon>
-    </ion-fab>
+    <button ion-button (click)="logout()">LOGOUT</button>
   </ion-toolbar>
 </ion-header>
 <div class="map-wrapper">

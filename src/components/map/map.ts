@@ -132,7 +132,7 @@ export class MapComponent implements OnInit {
     let options = {
       center: location,
       zoom: 16,
-      styles: styledMap,
+      //styles: styledMap,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }

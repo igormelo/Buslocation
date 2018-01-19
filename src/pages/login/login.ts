@@ -4,7 +4,7 @@ import { MapComponent } from './../../components/map/map';
 import { AuthServiceProvider } from './../../providers/auth-service/auth-service';
 import { User } from './../../models/user';
 import { Component, Input, OnInit } from '@angular/core';
-import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform, ToastController, LoadingController, AlertController, MenuController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -40,7 +40,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public afAuth: AngularFireAuth,
     public facebook: Facebook, public platform: Platform, private toastCtrl: ToastController, private authService: AuthServiceProvider,
-    public fb: FormBuilder, private alertCtrl: AlertController) {
+    public fb: FormBuilder, private alertCtrl: AlertController, public menu: MenuController) {
     this.initForm(fb);
     this.user = new User();
 
@@ -51,7 +51,10 @@ export class LoginPage {
     }
   }
   ionViewDidLoad() {
-
+    this.menu.enable(false);
+  }
+  ionViewDidLeave() {
+    this.menu.enable(true);
   }
 
   facebookLogin() {
