@@ -14,7 +14,6 @@ import { HomePage } from '../pages/home/home';
 import { AngularFireModule } from 'angularfire2';
 import { StatusBar } from '@ionic-native/status-bar';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { SplashScreen } from '@ionic-native/splash-screen';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../pages/login/login';
@@ -24,6 +23,7 @@ import { MapComponent } from '../components/map/map';
 import { BusService } from '../providers/bus/bus';
 import { SimutaleProvider } from '../providers/simutale/simutale';
 import { BuslocationComponent } from '../components/buslocation/buslocation';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 const firebaseConfig = {
@@ -70,9 +70,9 @@ const firebaseConfig = {
   ],
   providers: [
     StatusBar,
-    SplashScreen,
     GoogleMaps,
     Facebook,
+    SplashScreen,
     AngularFireAuth,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AuthServiceProvider,

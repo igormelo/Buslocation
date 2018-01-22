@@ -18,10 +18,15 @@
     text-align: center;
 }
 .img{
-    align-items: center;
-    width: 100px;
-    height: 100px;
+    align-items: left;
+    width: 70px;
+    height: 70px;
     margin: auto;
+    border: 2px solid #353232;
     border-radius: 50px;
-    display: block;
+}
+.ion-menu{
+    ion-content{
+        background-color: white !important;
+    }
 }
