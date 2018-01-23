@@ -1,6 +1,6 @@
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { MylocationComponent } from '../mylocation/mylocation';
@@ -16,9 +16,13 @@ declare var google: any;
   templateUrl: 'map.html'
 })
 export class MapComponent implements OnInit {
+  start: any;
+  end: any;
   public map: google.maps.Map;
   public mapIdle: boolean;
   public loc: any;
+  directionsService = new google.maps.DirectionsService;
+  directionsDisplay = new google.maps.DirectionsRenderer;
   constructor(public af: AngularFireDatabase, public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public geolocation: Geolocation, public afAuth: AngularFireAuth) {
 
   }
@@ -29,6 +33,8 @@ export class MapComponent implements OnInit {
       //this.map.panTo(location);
       this.centerLocation(location);
     })
+    this.calculateAndDisplayRoute();
+
   }
 
   addMapEventListener() {
@@ -138,6 +144,7 @@ export class MapComponent implements OnInit {
     }
     let mapElement = document.getElementById("map_canvas");
     let map = new google.maps.Map(mapElement, options);
+    this.directionsDisplay.setMap(map);
     return map;
   }
 
@@ -154,5 +161,21 @@ export class MapComponent implements OnInit {
     let time = new Date().getHours();
     return (time > 5 && time < 19) ? false : true;
   }
+  calculateAndDisplayRoute() {
+    this.start = 'rio de janeiro, rj';
+    this.end = 'nova iguaçu, rj';
+    this.directionsService.route({
+      origin: this.start,
+      destination: this.end,
+      travelMode: 'TRANSIT'
+    }, (response, status) => {
+      if (status === 'OK') {
+        this.directionsDisplay.setDirections(response);
+      } else {
+        console.log("error" + status);
+      }
+    });
+  }
+
 
 }

@@ -1,7 +1,7 @@
 <div class="wrapper">
   <div id="map_canvas"></div>
-  <mylocation [map]="map" [isPinSet]="mapIdle">
+  <mylocation [map]="map" [isPinSet]="mapIdle" [start]="this.start">
   </mylocation>
-  <buslocation [map]="map">
+  <buslocation [map]="map" [end]="this.end">
   </buslocation>
 </div>

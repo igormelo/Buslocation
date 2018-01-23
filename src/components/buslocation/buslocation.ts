@@ -24,10 +24,12 @@ export class BuslocationComponent implements OnInit {
   lat: number;
   lng: number;
   motorista: Array<any>;
+  @Input() end: any;
   constructor(private af: AngularFireDatabase, private busService: BusService) {
     this.busMarker = [];
   }
   ngOnInit() {
+    this.end = 'nova iguaçu, rj';
     this.init();
   }
   ngOnChanges() {
@@ -39,6 +41,7 @@ export class BuslocationComponent implements OnInit {
       position: new google.maps.LatLng(bus.lat, bus.lng),
       icon: 'https://i.imgur.com/6Lo4UGC.png'
     });
+    //this.end = new google.maps.LatLng(parseFloat(bus.lat), parseFloat(bus.lng));
   }
   removeBusMarkers() {
     let numOfCars = this.busMarker.length;

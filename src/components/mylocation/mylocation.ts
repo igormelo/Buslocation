@@ -10,6 +10,7 @@ declare var google: any;
 export class MylocationComponent implements OnInit, OnChanges {
   @Input() isPinSet: boolean;
   @Input() map: google.maps.Map;
+  @Input() start: any;
   private popup: google.maps.InfoWindow;
   private pickupMarker: SlidingMarker;
 
@@ -29,6 +30,7 @@ export class MylocationComponent implements OnInit, OnChanges {
       map: this.map,
       position: this.map.getCenter()
     });
+    this.start = 'rio de janeiro, rj';
     /*setTimeout(() => {
       this.pickupMarker.setAnimation(null);
     }, 300);*/

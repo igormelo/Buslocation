@@ -4,7 +4,7 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Component, ViewChild, Input } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, IonicPage } from 'ionic-angular';
 import { CapitalizePipe } from '../../pipes/capitalize/capitalize';
 import { LoginPage } from '../login/login';
 import { window } from 'rxjs/operator/window';
@@ -12,8 +12,7 @@ import { AuthServiceProvider } from './../../providers/auth-service/auth-service
 import { StatusBar } from '@ionic-native/status-bar';
 import { AboutPage } from '../about/about';
 import { Nav } from 'ionic-angular';
-
-
+declare var google;
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -36,6 +35,7 @@ export class HomePage {
       duration: 3000
     }).present();
   }
+
   logout() {
     this.afAuth.auth.signOut();
     this.navCtrl.setRoot(LoginPage);
