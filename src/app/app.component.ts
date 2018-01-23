@@ -1,3 +1,4 @@
+import { LoginPage } from './../pages/login/login';
 import { SplashPage } from './../pages/splash/splash';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AboutPage } from './../pages/about/about';
@@ -29,7 +30,7 @@ export class MyApp {
           this.image = user.photoURL;
           this.nav.setRoot(HomePage, { name: user.displayName, img: user.photoURL });
         } else {
-          this.nav.setRoot(HomePage);
+          this.nav.setRoot(LoginPage);
         }
       })
     });
