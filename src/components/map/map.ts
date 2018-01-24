@@ -31,7 +31,9 @@ export class MapComponent implements OnInit {
     this.addMapEventListener();
     this.getCurrentLocation().subscribe(location => {
       //this.map.panTo(location);
+      console.log(location);
       this.centerLocation(location);
+
     })
     this.calculateAndDisplayRoute();
 
@@ -162,8 +164,8 @@ export class MapComponent implements OnInit {
     return (time > 5 && time < 19) ? false : true;
   }
   calculateAndDisplayRoute() {
-    this.start = 'rio de janeiro, rj';
-    this.end = 'nova iguaçu, rj';
+    //this.start = 'rio de janeiro, rj';
+    //this.end = 'nova iguaçu, rj';
     this.directionsService.route({
       origin: this.start,
       destination: this.end,

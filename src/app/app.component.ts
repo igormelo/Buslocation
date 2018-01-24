@@ -1,4 +1,3 @@
-import { LoginPage } from './../pages/login/login';
 import { SplashPage } from './../pages/splash/splash';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AboutPage } from './../pages/about/about';
@@ -18,6 +17,8 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   email: string;
   image: string;
+  isConnected: boolean;
+  text: string;
   constructor(platform: Platform, public statusBar: StatusBar, public afAuth: AngularFireAuth, modalCtrl: ModalController, public splashScreen: SplashScreen) {
     platform.ready().then(() => {
       this.splashScreen.hide();
@@ -26,10 +27,18 @@ export class MyApp {
 
       const unsubscribe = this.afAuth.auth.onAuthStateChanged((user) => {
         if (user) {
+          this.isConnected = true;
+          if (this.isConnected === true) {
+            this.text = "Conectado";
+          }
           this.email = user.displayName;
           this.image = user.photoURL;
           this.nav.setRoot(HomePage, { name: user.displayName, img: user.photoURL });
         } else {
+          this.isConnected = false;
+          if (!this.isConnected) {
+            this.text = "Desconectado";
+          }
           this.nav.setRoot(LoginPage);
         }
       })

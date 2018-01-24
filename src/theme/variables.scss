@@ -10,8 +10,7 @@ $font-path: "../assets/fonts";
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
-
-
+$text-input-placeholder-color: #100F0F;
 @import "ionic.globals";
 
 
@@ -38,7 +37,9 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222,
   toolbarColor: rgb(26, 27, 28),
-  itemColor: rgb(81, 151, 249)
+  itemColor: rgb(81, 151, 249),
+  fab: #4675ED,
+  texto: #878787
 );
 
 

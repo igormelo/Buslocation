@@ -10,13 +10,18 @@ declare var google: any;
 export class MylocationComponent implements OnInit, OnChanges {
   @Input() isPinSet: boolean;
   @Input() map: google.maps.Map;
-  @Input() start: any;
+  @Input('start') start: any;
   private popup: google.maps.InfoWindow;
   private pickupMarker: SlidingMarker;
 
   constructor() {
   }
   ngOnInit() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.start = { lat: position.coords.latitude, lng: position.coords.longitude }
+      })
+    }
   }
   ngOnChanges(changes) {
     if (this.isPinSet) {
@@ -30,7 +35,7 @@ export class MylocationComponent implements OnInit, OnChanges {
       map: this.map,
       position: this.map.getCenter()
     });
-    this.start = 'rio de janeiro, rj';
+
     /*setTimeout(() => {
       this.pickupMarker.setAnimation(null);
     }, 300);*/

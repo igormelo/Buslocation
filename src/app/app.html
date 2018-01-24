@@ -1,28 +1,29 @@
 <ion-menu [content]="content">
     <ion-header>
-        <ion-toolbar color="itemColor" style="height: 150px">
+        <ion-toolbar color="dark" style="height: 200px">
             <ion-thumbnail>
                 <img [src]="this.image" class="img" onError="src='http://americanconstruction.net/wp-content/uploads/2015/10/upload-empty.png'">
             </ion-thumbnail>
-            <ion-title color="secondary">Igor Melo</ion-title>
+            <ion-title>Igor Melo</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>
-
-        <ion-item-group>
-            <button ion-item>
-                    <ion-label color="dark">Como usar</ion-label>
+        <ion-item-divider color="dark" class="borda">
+            <ion-icon name="checkmark" item-left *ngIf="isConnected"></ion-icon>
+            <ion-label color="texto">{{text}}</ion-label>
+        </ion-item-divider>
+        <button ion-item style="height:50px" color="dark" no-lines>
+                    <ion-label color="light">Como usar</ion-label>
                 </button>
-            <button ion-item>
-                    <ion-label color="dark">Minhas viagens</ion-label>
+        <button ion-item style="height: 50px" color="dark" no-lines>
+                    <ion-label color="light">Minhas viagens</ion-label>
                 </button>
-            <button ion-item>
-                    <ion-label color="dark">Configurações</ion-label>
+        <button ion-item style="height: 50px" color="dark" no-lines>
+                    <ion-label color="light">Configurações</ion-label>
                 </button>
-            <button ion-item (click)="logout()">
-                    <ion-label color="dark">Sair</ion-label>
+        <button ion-item (click)="logout()" style="height: 50px" color="dark" no-lines>
+                    <ion-label color="light">Sair</ion-label>
                 </button>
-        </ion-item-group>
     </ion-content>
 </ion-menu>
 <ion-nav #content id="nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>
