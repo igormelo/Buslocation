@@ -31,15 +31,15 @@ export class BuslocationComponent implements OnInit {
     this.busMarker = [];
   }
   ngOnInit() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        console.log(position.coords);
-        this.addMyPosition(position);
-      });
-    }
+
     this.init();
   }
   ngOnChanges() {
+    if (this.isPinSet) {
+      this.addMyPosition();
+    } else {
+      console.log("error");
+    }
   }
 
   addBusMarker(bus) {
@@ -74,7 +74,7 @@ export class BuslocationComponent implements OnInit {
     this.polyline.setMap(this.map);
   }
 
-  addMyPosition(position) {
+  addMyPosition() {
     this.myPos = new google.maps.Marker({
       map: this.map,
       position: this.map.getCenter()
