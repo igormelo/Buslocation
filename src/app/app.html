@@ -1,6 +1,6 @@
 <ion-menu [content]="content">
     <ion-header>
-        <ion-toolbar color="dark" style="height: 200px">
+        <ion-toolbar style="height: 250px">
             <ion-thumbnail>
                 <img [src]="this.image" class="img" onError="src='http://americanconstruction.net/wp-content/uploads/2015/10/upload-empty.png'">
             </ion-thumbnail>
@@ -21,9 +21,10 @@
         <button ion-item style="height: 50px" color="dark" no-lines>
                     <ion-label color="light">Configurações</ion-label>
                 </button>
+        <button ion-item full (click)="facebookLogin()" icon-end>Facebook<ion-icon name="logo-facebook"></ion-icon></button>
         <button ion-item (click)="logout()" style="height: 50px" color="dark" no-lines>
                     <ion-label color="light">Sair</ion-label>
                 </button>
     </ion-content>
 </ion-menu>
-<ion-nav #content id="nav" [root]="rootPage" swipeBackEnabled="false"></ion-nav>
+<ion-nav #content [root]="rootPage" swipeBackEnabled="false"></ion-nav>

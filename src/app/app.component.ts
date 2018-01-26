@@ -1,3 +1,4 @@
+import { HomePage } from './../pages/home/home';
 import { SplashPage } from './../pages/splash/splash';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { AboutPage } from './../pages/about/about';
@@ -5,7 +6,6 @@ import { MapComponent } from './../components/map/map';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { Platform, NavController, ModalController, MenuController, Nav, NavParams } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { HomePage } from '../pages/home/home';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../pages/login/login';
 
@@ -39,7 +39,7 @@ export class MyApp {
           if (!this.isConnected) {
             this.text = "Desconectado";
           }
-          this.nav.setRoot(LoginPage);
+          this.nav.setRoot(HomePage);
         }
       })
     });

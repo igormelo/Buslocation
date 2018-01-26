@@ -3,23 +3,15 @@
     <button ion-button menuToggle>
               <ion-icon name="menu"></ion-icon>
             </button>
-    <ion-searchbar [(ngModel)]="autocomplete.query" placeholder="Para onde quer ir" (ionInput)="searchResult()" [showCancelButton]="true"
+    <ion-searchbar [(ngModel)]="autocomplete.query" placeholder="Para onde quer ir" (ionInput)="searchResult()" showCancelButton="true"
       transparent></ion-searchbar>
-    <!--<ion-item>-->
-    <!--<ion-input type="text" placeholder="Para onde quer ir?" class="text-input" no-lines [(ngModel)]="autocomplete"></ion-input>-->
-    <!--<button ion-fab color="fab" mini item-right>
-          <ion-icon name="search"></ion-icon>
-      </button>-->
-    <!--</ion-item>-->
   </ion-toolbar>
-</ion-header>
-<ion-content>
   <ion-list>
     <ion-item *ngFor="let item of autocompleteItems" tappable (click)="chooseItem(item)">
       {{item}}
     </ion-item>
   </ion-list>
-</ion-content>
+</ion-header>
 <div class="map-wrapper">
   <ion-fab right bottom>
     <button ion-fab color="primary">

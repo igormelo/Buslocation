@@ -96,7 +96,7 @@
     <plugin name="cordova-plugin-googlemaps" spec="^2.1.1">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyB-wUaUTgO5jQWJOMpG2kDq5W1t4tG1ZmQ" />
     </plugin>
-    <plugin name="cordova.plugins.diagnostic" spec="^3.9.0" />
+    <plugin name="cordova.plugins.diagnostic" spec="^3.9.1" />
     <plugin name="cordova-plugin-android-permissions" spec="^1.0.0" />
     <plugin name="cordova-plugin-facebook4" spec="^1.9.1">
         <variable name="APP_ID" value="156566041754041" />
@@ -105,7 +105,7 @@
     <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
     <plugin name="cordova-plugin-firebase" spec="^0.1.25" />
     <plugin name="cordova-plugin-nativestorage" spec="^2.2.2" />
-    <plugin name="cordova-plugin-badge" spec="^0.8.6" />
+    <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
 </widget>

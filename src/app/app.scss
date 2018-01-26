@@ -17,6 +17,7 @@
 .toolbar-title {
     text-align: center;
     padding-top: 20px;
+    color: white;
 }
 .img{
     align-items: left;
@@ -28,4 +29,8 @@
 }
 .borda{
     border-bottom-color: #353535;
+}
+.toolbar-background{
+    background-image: url("../assets/imgs/toolbarimg.png");
+    opacity: 0.5;
 }
