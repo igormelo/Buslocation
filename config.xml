@@ -108,4 +108,5 @@
     <plugin name="cordova-plugin-badge" spec="^0.8.7" />
     <plugin name="cordova-plugin-splashscreen" spec="^5.0.1" />
     <plugin name="cordova-plugin-statusbar" spec="^2.4.1" />
+    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
 </widget>

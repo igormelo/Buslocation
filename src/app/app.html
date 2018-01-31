@@ -4,7 +4,7 @@
             <ion-thumbnail>
                 <img [src]="this.image" class="img" onError="src='http://americanconstruction.net/wp-content/uploads/2015/10/upload-empty.png'">
             </ion-thumbnail>
-            <ion-title>Igor Melo</ion-title>
+            <ion-title *ngIf="this.isConnected">{{name}}</ion-title>
         </ion-toolbar>
     </ion-header>
     <ion-content>

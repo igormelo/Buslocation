@@ -65,7 +65,7 @@ export class LoginPage {
       firebase.auth().signInWithCredential(facebookCredential)
         .then((success) => {
           this.img = success.photoURL;
-          this.navCtrl.setRoot(HomePage, { name: success.displayName, img: success.photoURL });
+          this.navCtrl.push(HomePage, { name: success.displayName, img: success.photoURL });
         });
     });
   }

@@ -1,3 +1,4 @@
+import { Network } from '@ionic-native/network';
 import { MapComponent } from './../../components/map/map';
 import { MylocationComponent } from './../../components/mylocation/mylocation';
 import { GoogleMaps } from '@ionic-native/google-maps';
@@ -29,7 +30,7 @@ export class HomePage {
   acService: any;
   geo: any;
   placesService: any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public maps: GoogleMaps, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private statusBar: StatusBar, public viewCtrl: ViewController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public maps: GoogleMaps, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private statusBar: StatusBar, public viewCtrl: ViewController, private network: Network) {
     this.acService = new google.maps.places.AutocompleteService();
     this.autocompleteItems = [];
     this.autocomplete = {
@@ -40,7 +41,7 @@ export class HomePage {
     this.name = this.navParams.get('name');
     this.photoURL = this.navParams.get('img');
     this.toastCtrl.create({
-      message: `Bem vindo:  ${this.name}`,
+      message: `Bem vindo  ${this.name}`,
       duration: 3000
     }).present();
   }
@@ -48,10 +49,6 @@ export class HomePage {
   logout() {
     this.afAuth.auth.signOut();
     this.navCtrl.setRoot(LoginPage);
-  }
-
-  about() {
-    this.navCtrl.push(AboutPage, { name: this.name, img: this.photoURL })
   }
 
   searchResult() {

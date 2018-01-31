@@ -1,3 +1,4 @@
+import { Geolocation } from '@ionic-native/geolocation';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import { BusService } from './../../providers/bus/bus';
@@ -5,12 +6,6 @@ import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as SlidingMarker from 'marker-animate-unobtrusive';
 import * as firebase from 'firebase/app';
 
-/**
- * Generated class for the BuslocationComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 declare var google: any;
 @Component({
   selector: 'buslocation',
@@ -18,68 +13,44 @@ declare var google: any;
   providers: [BusService]
 })
 export class BuslocationComponent implements OnInit {
-  @Input() isPinSet: boolean;
   @Input() map: google.maps.Map;
   public busMarker: Array<google.maps.Marker>;
-  res: any = {};
-  lat: number;
-  lng: number;
   private popup: google.maps.InfoWindow;
   private myPos: google.maps.Marker;
   public polyline: google.maps.Polyline;
-  constructor(private af: AngularFireDatabase, private busService: BusService) {
+  constructor(private af: AngularFireDatabase, private busService: BusService, private geolocation: Geolocation) {
     this.busMarker = [];
   }
   ngOnInit() {
 
-    this.init();
   }
   ngOnChanges() {
-    if (this.isPinSet) {
-      this.addMyPosition();
-    } else {
-      console.log("error");
-    }
+    this.addMyPosition();
+    this.loadData();
   }
 
-  addBusMarker(bus) {
-    let busMarker = new google.maps.Marker({
-      map: this.map,
-      position: new google.maps.LatLng(bus.lat, bus.lng),
-      icon: 'https://i.imgur.com/6Lo4UGC.png'
-    });
-  }
-  removeBusMarkers() {
-    let numOfCars = this.busMarker.length;
-    while (numOfCars--) {
-      let buses = this.busMarker.pop();
-      buses.setMap(null);
-    }
-  }
-
-  init() {
+  loadData() {
     this.busService.getBus().subscribe(snap => {
-      snap.forEach(data => {
-        this.addBusMarker(data);
-        this.showDirection(data);
+      snap.forEach(position => {
+        console.log(position);
+        this.updateBusMarker(position);
       })
     });
-  }
-  showDirection(path) {
-    this.polyline = new google.maps.Polyline({
-      path: path,
-      strokeColor: '#FF0000',
-      strokeWeight: 3
-    });
-    this.polyline.setMap(this.map);
   }
 
   addMyPosition() {
     this.myPos = new google.maps.Marker({
       map: this.map,
-      position: this.map.getCenter()
-    });
-    this.showPickupTime();
+      position: this.map.getCenter(),
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        scale: 8.0,
+        fillColor: "#769fe0",
+        fillOpacity: 0.8,
+        strokeWeight: 1.5
+      }
+    })
+
   }
   showPickupTime() {
     this.popup = new google.maps.InfoWindow({
@@ -89,6 +60,25 @@ export class BuslocationComponent implements OnInit {
     google.maps.event.addListener(this.myPos, 'click', () => {
       this.popup.open(this.map, this.myPos);
     })
+  }
+  addBusMarker(position) {
+    let busMarker = new SlidingMarker({
+      map: this.map,
+      position: position,
+      animation: google.maps.Animation.DROP,
+      icon: 'https://i.imgur.com/6Lo4UGC.png'
+    });
+    busMarker.setDuration(1000);
+    busMarker.setEasing('linear');
+    this.busMarker.push(busMarker);
+  }
+
+  updateBusMarker(position) {
+    for (var i = 0; i < this.busMarker.length; i++) {
+      this.busMarker[i].setPosition(position);
+      return;
+    }
+    this.addBusMarker(position);
   }
 
 }

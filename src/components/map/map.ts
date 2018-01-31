@@ -30,7 +30,7 @@ export class MapComponent implements OnInit {
     this.map = this.createMap(this.loc);
     this.addMapEventListener();
     this.getCurrentLocation().subscribe(location => {
-      //this.map.panTo(location);
+      this.map.panTo(location);
       console.log(location);
       this.centerLocation(location);
 
@@ -73,7 +73,7 @@ export class MapComponent implements OnInit {
   }
 
   createMap(location) {
-    var style = [];
+    console.log(location);
     var styledMap = [
       {
         "featureType": "administrative.country",
@@ -140,7 +140,7 @@ export class MapComponent implements OnInit {
     let options = {
       center: location,
       zoom: 16,
-      //styles: styledMap,
+      styles: styledMap,
       disableDefaultUI: true,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     }
@@ -151,13 +151,8 @@ export class MapComponent implements OnInit {
   }
 
   centerLocation(location) {
-    if (location) {
-      this.map.panTo(location);
-    } else {
-      this.getCurrentLocation().subscribe(currentLocation => {
-        this.map.panTo(currentLocation);
-      });
-    }
+    this.map.getCenter();
+
   }
   isNight() {
     let time = new Date().getHours();
@@ -165,7 +160,7 @@ export class MapComponent implements OnInit {
   }
   calculateAndDisplayRoute() {
     //this.start = 'rio de janeiro, rj';
-    //this.end = 'nova iguaçu, rj';
+    //this.end = this.map.getCenter();;
     this.directionsService.route({
       origin: this.start,
       destination: this.end,

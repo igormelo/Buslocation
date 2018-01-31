@@ -1,3 +1,4 @@
+import { Network } from '@ionic-native/network';
 import { SplashPage } from './../pages/splash/splash';
 import { Geolocation } from '@ionic-native/geolocation';
 import { MylocationComponent } from './../components/mylocation/mylocation';
@@ -21,7 +22,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { MapComponent } from '../components/map/map';
 import { BusService } from '../providers/bus/bus';
-import { SimutaleProvider } from '../providers/simutale/simutale';
 import { BuslocationComponent } from '../components/buslocation/buslocation';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -78,7 +78,7 @@ const firebaseConfig = {
     AuthServiceProvider,
     Geolocation,
     BusService,
-    SimutaleProvider
+    Network
   ]
 })
 export class AppModule { }

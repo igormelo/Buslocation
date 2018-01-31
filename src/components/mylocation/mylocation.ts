@@ -29,10 +29,6 @@ export class MylocationComponent implements OnInit, OnChanges {
       map: this.map,
       position: this.map.getCenter()
     });
-
-    /*setTimeout(() => {
-      this.pickupMarker.setAnimation(null);
-    }, 300);*/
     this.showPickupTime();
   }
   removePickupMarker() {
