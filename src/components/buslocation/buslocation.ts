@@ -5,6 +5,7 @@ import { BusService } from './../../providers/bus/bus';
 import { Component, Input, OnInit, OnChanges } from '@angular/core';
 import * as SlidingMarker from 'marker-animate-unobtrusive';
 import * as firebase from 'firebase/app';
+import { Device } from '@ionic-native/device';
 
 declare var google: any;
 @Component({
@@ -18,7 +19,8 @@ export class BuslocationComponent implements OnInit {
   private popup: google.maps.InfoWindow;
   private myPos: google.maps.Marker;
   public polyline: google.maps.Polyline;
-  constructor(private af: AngularFireDatabase, private busService: BusService, private geolocation: Geolocation) {
+  public obj = {};
+  constructor(private af: AngularFireDatabase, private busService: BusService, private geolocation: Geolocation, private device: Device) {
     this.busMarker = [];
   }
   ngOnInit() {
@@ -30,12 +32,14 @@ export class BuslocationComponent implements OnInit {
   }
 
   loadData() {
-    this.busService.getBus().subscribe(snap => {
-      snap.forEach(position => {
-        console.log(position);
-        this.updateBusMarker(position);
+    this.busService.getBus().on('value', resp => {
+      snapshotToArray(resp).forEach(data => {
+        console.log(data);
+        this.updateBusMarker(data);
+        this.setMapOnAll(this.map);
       })
-    });
+    })
+
   }
 
   addMyPosition() {
@@ -65,20 +69,41 @@ export class BuslocationComponent implements OnInit {
     let busMarker = new SlidingMarker({
       map: this.map,
       position: position,
-      animation: google.maps.Animation.DROP,
       icon: 'https://i.imgur.com/6Lo4UGC.png'
     });
     busMarker.setDuration(1000);
     busMarker.setEasing('linear');
     this.busMarker.push(busMarker);
+
   }
 
   updateBusMarker(position) {
     for (var i = 0; i < this.busMarker.length; i++) {
-      this.busMarker[i].setPosition(position);
+      this.busMarker[i].setPosition(new google.maps.LatLng(position));
       return;
     }
     this.addBusMarker(position);
   }
+  clearMarkers() {
+    this.setMapOnAll(null);
+  }
+  setMapOnAll(map) {
+    for (var i = 0; i < this.busMarker.length; i++) {
+      this.busMarker[i].setMap(map);
+    }
+  }
+  deleteBusMarker() {
+    this.clearMarkers();
+    this.busMarker = [];
+  }
 
+}
+export const snapshotToArray = snapshot => {
+  let returnArray = [];
+  snapshot.forEach(childSnapshot => {
+    let item = childSnapshot.val();
+    item.key = childSnapshot.key;
+    returnArray.push(item);
+  });
+  return returnArray;
 }

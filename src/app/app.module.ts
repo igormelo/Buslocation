@@ -24,6 +24,7 @@ import { MapComponent } from '../components/map/map';
 import { BusService } from '../providers/bus/bus';
 import { BuslocationComponent } from '../components/buslocation/buslocation';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Device } from '@ionic-native/device';
 
 
 const firebaseConfig = {
@@ -78,7 +79,8 @@ const firebaseConfig = {
     AuthServiceProvider,
     Geolocation,
     BusService,
-    Network
+    Network,
+    Device
   ]
 })
 export class AppModule { }

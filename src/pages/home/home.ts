@@ -31,7 +31,7 @@ export class HomePage {
   geo: any;
   placesService: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, private toastCtrl: ToastController, public maps: GoogleMaps, private af: AngularFireDatabase, public afAuth: AngularFireAuth, private statusBar: StatusBar, public viewCtrl: ViewController, private network: Network) {
-    this.acService = new google.maps.places.AutocompleteService();
+    //this.acService = new google.maps.places.AutocompleteService();
     this.autocompleteItems = [];
     this.autocomplete = {
       query: ''

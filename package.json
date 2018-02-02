@@ -21,6 +21,7 @@
     "@angular/platform-browser": "4.4.4",
     "@angular/platform-browser-dynamic": "4.4.4",
     "@ionic-native/core": "4.3.2",
+    "@ionic-native/device": "^4.5.3",
     "@ionic-native/facebook": "^4.3.3",
     "@ionic-native/firebase": "^4.3.3",
     "@ionic-native/geolocation": "^4.4.2",
